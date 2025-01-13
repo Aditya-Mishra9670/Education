@@ -5,9 +5,14 @@ const LoginPage = () => {
   return (
     <div className="d-flex align-items-center justify-content-center vh-100" style={{
       backgroundImage: "linear-gradient(to right, #6a11cb, #2575fc)",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
       color: "#fff",
+      width: "100vw",
+      height: "100vh",
+      margin: 0,
     }}>
-      <div className="card p-4" style={{ width: "400px", borderRadius: "15px" }}>
+      <div className="card p-4 w-100" style={{ maxWidth: "400px", borderRadius: "15px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }}>
         <h2 className="text-center mb-4">Sign in</h2>
         <form>
           <div className="mb-3">
