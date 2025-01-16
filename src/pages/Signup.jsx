@@ -17,44 +17,44 @@ const Signup = () => {
           </p>
           <form className="mt-8">
             <div className="mb-5 relative">
-              <User className="absolute left-3 top-3 text-sky-400" />
+              <User className="absolute left-3 top-3 text-sky-600" />
               <input
                 type="text"
                 placeholder="Full Name"
-                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-100"
+                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-50 text-black"
               />
             </div>
             <div className="mb-5 relative">
-              <Mail className="absolute left-3 top-3 text-sky-400" />
+              <Mail className="absolute left-3 top-3 text-sky-600" />
               <input
                 type="email"
                 placeholder="Email"
-                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-100"
+                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-50 text-black"
               />
             </div>
             <div className="mb-5 relative">
-              <Lock className="absolute left-3 top-3 text-sky-400" />
+              <Lock className="absolute left-3 top-3 text-sky-600" />
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-100"
+                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-50 text-black"
               />
               <div
-                className="absolute right-3 top-3 cursor-pointer"
+                className="absolute right-3 top-3 text-gray-700 cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <Eye /> : <EyeOff />}
               </div>
             </div>
             <div className="mb-5 relative">
-              <Lock className="absolute left-3 top-3 text-sky-400" />
+              <Lock className="absolute left-3 top-3 text-sky-600" />
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm Password"
-                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-100"
+                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-50 text-black"
               />
               <div
-                className="absolute right-3 top-3 cursor-pointer"
+                className="absolute right-3 top-3 text-gray-700 cursor-pointer"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? <Eye /> : <EyeOff />}
@@ -82,7 +82,7 @@ const Signup = () => {
             </button>
           </div>
         </div>
-        <div className="hidden md:flex w-1/3 bg-sky-200 rounded-l-3xl p-8 items-center justify-center">
+        <div className="hidden md:flex w-1/2 bg-sky-200 rounded-l-3xl p-8 items-center justify-center">
           <div className="text-center">
             <img
               src="https://ci3.googleusercontent.com/meips/ADKq_Nb--IXJ9pLL70f1Xt1aLNKQLSVRomZRY7qxNVR1eC44k_Ea_bqIGbVLVX1zXFAARvk_zd16ONTqTUIAy0kEWorBGO-_b-3AoiPFR5uEGel-VpaYxpaHHb9igPoamj7D5dNkmGpy3gv5lKysAQ=s0-d-e1-ft#https://res.cloudinary.com/dzitsseoz/image/upload/v1736671628/vcgq9rhodhvrs6dcridx.png"

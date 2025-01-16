@@ -7,7 +7,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen p-5 sm:p-20 flex items-center justify-center bg-yellow-50">
-      <div className="w-full max-w-6xl flex bg-white rounded-lg shadow-xl overflow-hidden">
+      <div className="w-full max-w-6xl flex bg-white rounded-lg gap-20 shadow-xl overflow-hidden">
         <div className="hidden md:flex w-1/3 bg-sky-200 p-8 rounded-r-3xl items-center justify-center">
           <div className="text-center">
             <img
@@ -28,22 +28,22 @@ const Login = () => {
           </p>
           <form className="mt-8">
             <div className="mb-5 relative">
-              <Mail className="absolute left-3 top-3 text-sky-400" />
+              <Mail className="absolute left-3 top-3 text-sky-600" />
               <input
                 type="email"
                 placeholder="Email"
-                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-100"
+                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-50 text-black"
               />
             </div>
             <div className="mb-5 relative">
-              <Lock className="absolute left-3 top-3 text-sky-400" />
+              <Lock className="absolute left-3 top-3 text-sky-600" />
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-100"
+                className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-sky-400 bg-sky-50 text-black"
               />
               <div
-                className="absolute right-3 top-3 cursor-pointer"
+                className="absolute right-3 text-gray-700 top-3 cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <Eye /> : <EyeOff />}

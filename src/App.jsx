@@ -7,6 +7,8 @@ function App() {
     <div>
       <Header/>
       <Routes>
+
+        {/* Dynamic routes should be there after integrating backend and checking for authentication */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
