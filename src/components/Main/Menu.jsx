@@ -12,7 +12,7 @@ import {
   const Menu = ({ isOpen }) => {
     return (
       <div
-        className={`fixed top-[60px] right-0 ${
+        className={`fixed top-[64px] right-0 ${
           isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
         } h-screen z-30 transition-all duration-300 bg-base-100 shadow-lg w-full sm:w-[350px]`}
       >
@@ -67,13 +67,7 @@ import {
             </Link>
             <ChevronRight className="h-5 w-5" />
           </div>
-          <div className="flex items-center justify-between bg-base-200 py-3 px-4 rounded-md hover:bg-primary hover:text-white transition">
-            <Link to="/help" className="flex items-center gap-3">
-              <FileText className="h-5 w-5" />
-              <span>Help & Support</span>
-            </Link>
-            <ChevronRight className="h-5 w-5" />
-          </div>
+          
           <div className="mt-10 text-center text-white text-sm sm:text-lg lg:text-xl  flex justify-center">
           <p className="gradient-text whitespace-nowrap text-5xl  signature">
             StudyTube
