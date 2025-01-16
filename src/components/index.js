@@ -1,5 +1,6 @@
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Main/Header";
+import Footer from "./Main/Footer";
+import Menu from "./Main/Menu";
 
 
-export {Header,Footer};
+export {Header,Footer,Menu};

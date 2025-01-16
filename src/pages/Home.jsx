@@ -3,7 +3,7 @@ import React from "react";
 const Home = () => {
   return (
     <div
-      className="hero min-h-screen"
+      className="hero min-h-screen pt-[64px]"
       style={{
         backgroundImage:
           "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)",
@@ -43,50 +43,6 @@ const Home = () => {
             eaque eum? Voluptatibus autem voluptatem quod debitis neque!
           </p>
           <button className="btn btn-primary">Get Started</button>
-        </div>
-      </div>
-      <div className="mt-20 carousel carousel-end rounded-box">
-        <div className="carousel-item">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp"
-            alt="Drink"
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.webp"
-            alt="Drink"
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.webp"
-            alt="Drink"
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1494253109108-2e30c049369b.webp"
-            alt="Drink"
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.webp"
-            alt="Drink"
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1559181567-c3190ca9959b.webp"
-            alt="Drink"
-          />
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.webp"
-            alt="Drink"
-          />
         </div>
       </div>
     </div>
