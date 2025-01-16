@@ -1,7 +1,7 @@
 import { Bell, Lock, Menu, Search, X } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import MenuC from "./Menu";
+import { SearchBar, MenuC } from "../index";
 
 const Header = () => {
   const userAuth = true;
@@ -11,7 +11,11 @@ const Header = () => {
   return (
     <div className="navbar fixed backdrop-blur-xl bg-base-100/70 w-full top-0 z-40 shadow-lg">
       <div className="navbar-start">
-        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle ml-5">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn btn-ghost btn-circle ml-5"
+        >
           <Link to="/">
             <img
               src="https://ci3.googleusercontent.com/meips/ADKq_Nb--IXJ9pLL70f1Xt1aLNKQLSVRomZRY7qxNVR1eC44k_Ea_bqIGbVLVX1zXFAARvk_zd16ONTqTUIAy0kEWorBGO-_b-3AoiPFR5uEGel-VpaYxpaHHb9igPoamj7D5dNkmGpy3gv5lKysAQ=s0-d-e1-ft#https://res.cloudinary.com/dzitsseoz/image/upload/v1736671628/vcgq9rhodhvrs6dcridx.png"
@@ -30,7 +34,10 @@ const Header = () => {
           <span className="hidden sm:inline">Search</span>
         </button>
         {userAuth && (
-          <Link to="/notifications" className="btn btn-sm gap-2 transition-colors">
+          <Link
+            to="/notifications"
+            className="btn btn-sm gap-2 transition-colors"
+          >
             <Bell className="w-5 h-5" />
             <span className="hidden sm:inline">Notifications</span>
           </Link>
@@ -41,7 +48,7 @@ const Header = () => {
             onClick={() => setOpenMenu(!openMenu)}
           >
             {!openMenu && <Menu className="w-5 h-5" />}
-            {openMenu && <X className="w-5 h-5"/>}
+            {openMenu && <X className="w-5 h-5" />}
             <span className="hidden sm:inline">Menu</span>
           </button>
         ) : (
@@ -52,19 +59,14 @@ const Header = () => {
         )}
       </div>
 
-      {showSearchBar && (
-        <dialog className="modal">
-          <div className="modal-box">
-            <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
-              </button>
-            </form>
-            <input type="text" className="input input-bordered w-full mt-4" />
-          </div>
-        </dialog>
-      )}
-      {<MenuC isOpen={openMenu} onClose={() => setOpenMenu(false)} />}
+      {<MenuC isOpen={openMenu} />}
+      {/* Update required  */}
+      {
+        <SearchBar
+          isOpen={showSearchBar}
+          isClose={() => setShowSearchBar(false)}
+        />
+      }
     </div>
   );
 };

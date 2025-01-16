@@ -1,6 +1,7 @@
 import Header from "./Main/Header";
 import Footer from "./Main/Footer";
-import Menu from "./Main/Menu";
+import MenuC from "./Main/Menu";
+import SearchBar from "./Main/SearchBar";
 
 
-export {Header,Footer,Menu};
+export {Header,Footer,MenuC,SearchBar};
