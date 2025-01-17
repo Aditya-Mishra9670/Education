@@ -9,17 +9,18 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <div className="navbar fixed backdrop-blur-xl bg-base-100/70 w-full top-0 z-40 shadow-lg">
+    <div className="navbar fixed top-0 z-40 w-full bg-base-100/70 backdrop-blur-xl shadow-lg">
       <div className="navbar-start">
         <div
           tabIndex={0}
           role="button"
-          className="btn btn-ghost btn-circle ml-5"
+          className=" btn btn-ghost btn-circle  ml-5"
         >
-          <Link to="/">
+          <Link to="/" className="absolute">
             <img
               src="https://ci3.googleusercontent.com/meips/ADKq_Nb--IXJ9pLL70f1Xt1aLNKQLSVRomZRY7qxNVR1eC44k_Ea_bqIGbVLVX1zXFAARvk_zd16ONTqTUIAy0kEWorBGO-_b-3AoiPFR5uEGel-VpaYxpaHHb9igPoamj7D5dNkmGpy3gv5lKysAQ=s0-d-e1-ft#https://res.cloudinary.com/dzitsseoz/image/upload/v1736671628/vcgq9rhodhvrs6dcridx.png"
               alt="Logo"
+              className="size-20 object-cover"
             />
           </Link>
         </div>
@@ -28,11 +29,15 @@ const Header = () => {
       <div className="navbar-end flex items-center gap-4">
         <button
           className="btn btn-sm gap-2 transition-colors"
-          onClick={() => setShowSearchBar(!showSearchBar)}
+          onClick={() => {
+            setShowSearchBar(!showSearchBar);
+            setOpenMenu(false);
+          }}
         >
           <Search className="w-5 h-5" />
           <span className="hidden sm:inline">Search</span>
         </button>
+
         {userAuth && (
           <Link
             to="/notifications"
@@ -42,10 +47,14 @@ const Header = () => {
             <span className="hidden sm:inline">Notifications</span>
           </Link>
         )}
+
         {userAuth ? (
           <button
             className="btn btn-sm gap-2 transition-colors"
-            onClick={() => setOpenMenu(!openMenu)}
+            onClick={() => {
+              setOpenMenu(!openMenu);
+              setShowSearchBar(false);
+            }}
           >
             {!openMenu && <Menu className="w-5 h-5" />}
             {openMenu && <X className="w-5 h-5" />}
@@ -59,14 +68,8 @@ const Header = () => {
         )}
       </div>
 
-      {<MenuC isOpen={openMenu} />}
-      {/* Update required  */}
-      {
-        <SearchBar
-          isOpen={showSearchBar}
-          isClose={() => setShowSearchBar(false)}
-        />
-      }
+      <MenuC isOpen={openMenu} isClose={() => setOpenMenu(false)} />
+      <SearchBar isOpen={showSearchBar} isClose={() => setShowSearchBar(false)} />
     </div>
   );
 };

@@ -4,8 +4,8 @@ import React from 'react'
 const SearchBar = ({ isOpen, isClose }) => {
   return (
     <div
-      className={`fixed top-[69px] left-0 right-0 mx-auto sm:w-[70%] w-full ${
-        isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
+      className={`fixed top-[69px] left-0 right-0 mx-auto  w-full ${
+        isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
       } transition-all duration-300  bg-base-100/90  items-start rounded-b-lg p-2 z-50`}
     >
       <input

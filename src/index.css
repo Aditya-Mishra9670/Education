@@ -2,10 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.nunito-body {
+  font-family: "Nunito", serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+
 .gradient-text {
-    font-size: 1.5rem;
-    font-weight: bold;
-    background: linear-gradient(270deg, #fefefe, #7f7f7f, #ffc75f, #126687);
+    font-weight:bolder;
+    background: linear-gradient(360deg, #fefefe, #7f7f7f, #ffc75f, #126687);
     background-size: 400% 400%;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -22,7 +29,7 @@
     }
   
     100% {
-      background-position: 0% 50%;
+      background-position: 50% 0%;
     }
   }
 
