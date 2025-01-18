@@ -1,0 +1,105 @@
+*{
+    background-color: #f9f9f9;
+}
+.authbox {
+    display: flex;
+    width: 80%; /* Adjust as needed */
+    margin: 50px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* Prevents content from overflowing rounded corners */
+}
+
+.loginleft,
+.RegistrationRight {
+    flex: 1; /* Equal width for both sides */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.loginleft {
+    border-right: 1px solid #eee; /* Separator between login and registration */
+    background-color: #f9f9f9;
+}
+.RegistrationRight{
+    background-color: #f9f9f9;
+}
+
+.loginleft h1,
+.RegistrationRight h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.loginleft form,
+.RegistrationRight form {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginleft input,
+.RegistrationRight input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 100%; /* Ensures inputs take full container width */
+}
+.RegistrationRight input[type="email"]{
+    width:calc(100% - 110px);
+    display:inline-block;
+    margin-right:10px;
+}
+.RegistrationRight button[type="button"]{
+    width:100px;
+    display:inline-block;
+}
+
+.loginleft button,
+.RegistrationRight button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.loginleft button:hover,
+.RegistrationRight button:hover {
+    background-color: #0056b3;
+}
+
+/* Style for radio buttons */
+.loginleft label,
+.RegistrationRight label {
+    margin-right: 15px;
+    display: inline-flex; /* Align label text with radio button */
+    align-items: center; /* Vertically center content */
+    margin-bottom: 10px;
+}
+
+.loginleft label input[type="radio"],
+.RegistrationRight label input[type="radio"] {
+    margin-right: 5px;
+    width: auto; /* Reset width for radio buttons */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .authbox {
+        flex-direction: column; /* Stack login and registration on smaller screens */
+        width: 95%;
+    }
+
+    .loginleft {
+        border-right: none;
+        border-bottom: 1px solid #eee; /* Add bottom border on smaller screens */
+    }
+}
