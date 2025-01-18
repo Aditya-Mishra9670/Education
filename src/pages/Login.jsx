@@ -70,10 +70,10 @@ const Login = () => {
           </form>
           <div className="divider text-base-content my-8">OR</div>
           <div className="flex flex-col gap-4">
-            <button className="btn bg-base-100 border border-primary text-primary w-full py-3 rounded-lg hover:bg-base-300 flex items-center justify-center gap-2">
+            <button className="btn bg-red-500 text-white border border-primary  w-full py-3 rounded-lg hover:bg-base-300 flex items-center justify-center gap-2">
               <Globe /> Continue with Google
             </button>
-            <button className="btn bg-base-100 border border-primary text-primary w-full py-3 rounded-lg hover:bg-base-300 flex items-center justify-center gap-2">
+            <button className="btn bg-blue-500 text-white border border-primary  w-full py-3 rounded-lg hover:bg-base-300 flex items-center justify-center gap-2">
               <Facebook /> Continue with Facebook
             </button>
           </div>

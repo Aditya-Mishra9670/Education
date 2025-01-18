@@ -4,7 +4,7 @@ import { Login, Signup, Home, ForgotPass, Error } from "./pages";
 
 function App() {
   return (
-    <div data-theme="light" className="nunito-body">
+    <div data-theme="forest" className="nunito-body">
       <Header />
       <Routes>
         {/* Dynamic routes should be there after integrating backend and checking for authentication */}
