@@ -6,5 +6,6 @@ import Hero from "./HomeComponents/Hero";
 import Compare from "./HomeComponents/Compare";
 import Steps from "./HomeComponents/Steps";
 import Cta from "./HomeComponents/Cta";
+import CourseSkeleton from "./Skeletons/CourseSkeleton"
 
-export {Header,Footer,MenuC,SearchBar,Hero,Compare,Steps,Cta};
+export {Header,Footer,MenuC,SearchBar,Hero,Compare,Steps,Cta,CourseSkeleton};

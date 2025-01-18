@@ -22,27 +22,27 @@ const Home = () => {
             <Steps/>
           </div>
 
-          <div className="bg-success/10 p-8 rounded-xl shadow-lg">
+          <div className="bg-base-100 p-8 rounded-xl shadow-2xl">
             <h2 className="text-2xl font-bold text-success mb-6">
-              Popular Courses
+              POPULAR COURSES
             </h2>
             <ul className="space-y-8">
               <li className="flex items-center gap-4">
                 <div className="w-4 h-4 bg-success rounded-full"></div>
-                <span className="text-lg font-medium ">Web Development</span>
+                <span className="text-lg font-medium ">WEBSITE DEVELOPMENT</span>
               </li>
               <li className="flex items-center gap-4">
                 <div className="w-4 h-4 bg-success rounded-full"></div>
-                <span className="text-lg font-medium ">Data Science</span>
+                <span className="text-lg font-medium ">DATA SCIENCE</span>
               </li>
               <li className="flex items-center gap-4">
                 <div className="w-4 h-4 bg-success rounded-full"></div>
-                <span className="text-lg font-medium ">MERN Stack</span>
+                <span className="text-lg font-medium ">MERN STACK</span>
               </li>
               <li className="flex items-center gap-4">
                 <div className="w-4 h-4 bg-success rounded-full"></div>
                 <span className="text-lg font-medium ">
-                  Data Structures & Algorithms
+                  DATA STRUCTURES & ALGORITHMS
                 </span>
               </li>
             </ul>

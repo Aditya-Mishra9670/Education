@@ -1,4 +1,5 @@
 import {
+  ArrowBigRightDash,
   ChevronRight,
   Clock,
   FileText,
@@ -27,6 +28,17 @@ const Menu = ({ isOpen, isClose }) => {
           <div className="flex items-center gap-3">
             <User className="h-5 w-5" />
             <span>Profile</span>
+          </div>
+          <ChevronRight className="h-5 w-5" />
+        </Link>
+        <Link
+          to="/courses"
+          onClick={isClose}
+          className="flex items-center justify-between py-3 px-4 bg-base-200 rounded-md hover:bg-primary hover:text-white transition"
+        >
+          <div className="flex items-center gap-3">
+            <ArrowBigRightDash className="h-5 w-5" />
+            <span>Explore</span>
           </div>
           <ChevronRight className="h-5 w-5" />
         </Link>
@@ -72,17 +84,6 @@ const Menu = ({ isOpen, isClose }) => {
           <div className="flex items-center gap-3">
             <Clock className="h-5 w-5" />
             <span>Latest Courses</span>
-          </div>
-          <ChevronRight className="h-5 w-5" />
-        </Link>
-        <Link
-          to="/terms-conditions"
-          onClick={isClose}
-          className="flex items-center justify-between py-3 px-4 bg-base-200 rounded-md hover:bg-primary hover:text-white transition"
-        >
-          <div className="flex items-center gap-3">
-            <FileText className="h-5 w-5" />
-            <span>Terms & Conditions</span>
           </div>
           <ChevronRight className="h-5 w-5" />
         </Link>
