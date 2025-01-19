@@ -29,19 +29,19 @@ const Home = () => {
             <ul className="space-y-8">
               <li className="flex items-center gap-4">
                 <div className="w-4 h-4 bg-success rounded-full"></div>
-                <span className="text-lg font-medium ">WEBSITE DEVELOPMENT</span>
+                <span className="text-lg ">WEBSITE DEVELOPMENT</span>
               </li>
               <li className="flex items-center gap-4">
                 <div className="w-4 h-4 bg-success rounded-full"></div>
-                <span className="text-lg font-medium ">DATA SCIENCE</span>
+                <span className="text-lg ">DATA SCIENCE</span>
               </li>
               <li className="flex items-center gap-4">
                 <div className="w-4 h-4 bg-success rounded-full"></div>
-                <span className="text-lg font-medium ">MERN STACK</span>
+                <span className="text-lg  ">DevOps</span>
               </li>
               <li className="flex items-center gap-4">
                 <div className="w-4 h-4 bg-success rounded-full"></div>
-                <span className="text-lg font-medium ">
+                <span className="text-lg">
                   DATA STRUCTURES & ALGORITHMS
                 </span>
               </li>
