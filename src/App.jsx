@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
-import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual } from "./pages";
+import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile } from "./pages";
 
 function App() {
   return (
@@ -14,6 +14,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPass />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/:id" element={<CourseIndividual />} />
+        <Route path="/profile" element={<Profile />} />
+
 
         <Route path="*" element={<Error />} />
       </Routes>

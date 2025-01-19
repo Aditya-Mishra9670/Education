@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Star, StarHalf, AlertTriangle, Users } from "lucide-react";
 import sample from "../sampleStore/sample";
+import { ReportForm } from "../components";
 
 const CourseIndividual = () => {
   const [loading, setLoading] = useState(false);
   const isRegistered = true;
   const course = sample[5];
+  const [showReportForm,setShowReportForm] = useState(false);
+
+  const handleReport = (reason)=>{
+    console.log(reason);
+    setShowReportForm(false);
+  }
 
   const handleAction = () => {
     setLoading(true);
@@ -96,11 +103,14 @@ const CourseIndividual = () => {
             ? "Continue Course"
             : "Enroll Now"}
         </button>
-        <button className="btn btn-outline btn-error flex items-center gap-2">
+        <button className="btn btn-outline btn-error flex items-center gap-2"
+        onClick={()=>setShowReportForm(true)}
+        >
           <AlertTriangle className="w-5 h-5" />
           Report
         </button>
       </footer>
+      {showReportForm && <ReportForm onSubmit={(reason)=>handleReport(reason)} onCancel={()=>setShowReportForm(false)}/>}
     </main>
   );
 };

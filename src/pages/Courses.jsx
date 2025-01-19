@@ -18,16 +18,16 @@ const Courses = () => {
         {courses.map((course, index) => (
           <article
             key={index}
-            className="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden"
+            className="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden flex flex-col"
           >
-            <figure className="w-full h-52 mt-5">
+            <figure className="w-full h-52 mt-5 flex-shrink-0">
               <img
                 src={course.thumbnail}
                 alt={course.title}
                 className="w-full h-full m-7 rounded-3xl object-cover"
               />
             </figure>
-            <div className="p-4">
+            <div className="p-4 flex flex-col flex-grow">
               <h2 className="text-lg font-semibold">{course.title}</h2>
               <div className="flex flex-wrap gap-2 mt-2">
                 {course.tags?.map((tag, index) => (
@@ -58,11 +58,9 @@ const Courses = () => {
                       <Star key={i} className="w-5 h-5" color="yellow" fill="yellow" />
                     )
                   )}
-                  
                   {course.rating % 1 > 0 && (
                     <StarHalf className="w-5 h-5" color="yellow" fill="yellow" />
                   )}
-
                 </div>
               </div>
               <div className="flex items-center justify-between text-sm mt-2">
@@ -76,7 +74,7 @@ const Courses = () => {
                   className="w-8 h-8 rounded-full object-cover"
                 />
               </div>
-              <div className="mt-4">
+              <div className="mt-4 flex-grow flex items-end">
                 <button
                   className="btn btn-primary w-full py-2 rounded-lg font-medium"
                   onClick={() => navigate(course.title)}

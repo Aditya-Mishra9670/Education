@@ -27,11 +27,11 @@ const Hero = () => {
         <div className="mt-8 flex gap-6">
           <Link
             to={userAuth ? "/explore" : "/login"}
-            className="btn btn-primary"
+            className="btn btn-primary hover:btn-outline"
           >
             Get Started
           </Link>
-          <Link to="/about" className="btn btn-outline">
+          <Link to="/about" className="btn btn-info btn-outline">
             Learn More
           </Link>
         </div>

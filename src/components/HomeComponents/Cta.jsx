@@ -15,7 +15,7 @@ const Cta = () => {
       </p>
       <Link
         to={userAuth ? "/explore" : "/login"}
-        className="btn btn-primary text-xl text-primary-content py-3 px-8 rounded-full"
+        className="btn btn-primary btn-outline text-xl text-primary-content py-3 px-8 rounded-full"
       >
         {userAuth ? "Explore Courses" : "Join Now"}
       </Link>
