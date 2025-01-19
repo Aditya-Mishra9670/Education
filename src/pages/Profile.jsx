@@ -1,32 +1,37 @@
 import React, { useState } from 'react'
 import { user } from "../sampleStore/sample"
-import { Camera, User, Tag, Mail, Lock, ChevronDown, ChevronUp } from 'lucide-react'
+import { Camera, User, Tag, Mail, Lock, ChevronDown, ChevronUp, Heart } from 'lucide-react'
 
 const Profile = () => {
   const [updatedUser, setUpdatedUser] = useState(user)
-  const [isEditing, setIsEditing] = useState(false)
-  const [showChangePass, setShowChangePass] = useState(false)
-  const [privacy, setPrivacy] = useState(false)
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false)
+  const [updatedfeilds,setUpdatedFeilds] = useState({
+    profilePic:null,
+    name:null,
+    interests:null
+  })
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0]
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      setUpdatedUser((prev) => ({
-        ...prev,
-        profilePic: reader.result,
-      }))
-      setIsUpdatingProfile(false)
-    }
-    if (file) {
-      setIsUpdatingProfile(true)
-      reader.readAsDataURL(file)
-    }
-  }
+    // const compressedFile = await imageCompression(file, {
+    //   maxSizeMB: 2,
+    //   maxWidthOrHeight: 1920,
+    //   initialQuality: 0.9,
+    //   useWebWorker: true,
+    // });
 
-  const togglePrivacy = () => {
-    setPrivacy(!privacy)
+    const reader = new FileReader();
+    // reader.readAsDataURL(compressedFile);
+    reader.readAsDataURL(file);
+
+
+    reader.onload = async () => {
+      const base64Image = reader.result;
+      // setUpdatedFeilds(prev=>{{...prev,profilePic:base64Image}})
+      
+      // await updateProfile({ profilePic: base64Image });
+    };
   }
 
   return (
@@ -89,6 +94,19 @@ const Profile = () => {
               </div>
               <p className="px-4 py-2.5 bg-base-200 rounded-lg border">
                 {updatedUser?.email}
+              </p>
+            </div>
+            <div className="space-y-1.5">
+              <div className="text-sm flex items-center gap-2">
+                <Heart className="w-4 h-4" />
+                Interests
+              </div>
+              <p className="px-4 py-2 flex items-center gap-2 bg-base-200 rounded-lg border">
+                {updatedUser?.interest.map((item)=>
+                (<div className='badge badge-info font-bold'>
+                  {item}
+                  
+                  </div>))}
               </p>
             </div>
           </div>

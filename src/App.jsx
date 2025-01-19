@@ -4,7 +4,7 @@ import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Prof
 
 function App() {
   return (
-    <div data-theme="forest" className="nunito-body">
+    <div data-theme="dim" className="nunito-body">
       <Header />
       <Routes>
         {/* Dynamic routes should be there after integrating backend and checking for authentication */}

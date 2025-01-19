@@ -14,8 +14,11 @@ const courses = [
       "Building a Responsive Webpage",
     ],
     level: "Beginner",
-    rating: 4.8,
+    rating: 5,
     teacherName: "Jane Doe",
+    date: new Date(
+      new Date().getTime() - Math.floor(Math.random() * 10000000000)
+    ),
   },
   {
     title: "Mastering Python for Data Science",
@@ -34,6 +37,9 @@ const courses = [
     level: "Intermediate",
     rating: 3.7,
     teacherName: "John Smith",
+    date: new Date(
+      new Date().getTime() - Math.floor(Math.random() * 10000000000)
+    ),
   },
   {
     title: "Digital Marketing Strategies",
@@ -52,6 +58,9 @@ const courses = [
     level: "Advanced",
     rating: 4,
     teacherName: "Sarah Johnson",
+    date: new Date(
+      new Date().getTime() - Math.floor(Math.random() * 10000000000)
+    ),
   },
   {
     title: "Graphic Design Essentials",
@@ -68,8 +77,11 @@ const courses = [
       "Creating Social Media Graphics",
     ],
     level: "Beginner",
-    rating: 4.9,
+    rating: 4.6,
     teacherName: "Emily Davis",
+    date: new Date(
+      new Date().getTime() - Math.floor(Math.random() * 10000000000)
+    ),
   },
   {
     title: "Mobile App Development with Flutter",
@@ -88,6 +100,9 @@ const courses = [
     level: "Intermediate",
     rating: 4.6,
     teacherName: "Michael Brown",
+    date: new Date(
+      new Date().getTime() - Math.floor(Math.random() * 10000000000)
+    ),
   },
   {
     title: "Introduction to Machine Learning",
@@ -106,8 +121,12 @@ const courses = [
     level: "Advanced",
     rating: 4.8,
     teacherName: "Laura Wilson",
+    date: new Date(
+      new Date().getTime() - Math.floor(Math.random() * 10000000000)
+    ),
   },
 ];
+
 
 export const user = {
   name: "Dheeraj Verma",
