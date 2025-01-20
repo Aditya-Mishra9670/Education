@@ -6,13 +6,13 @@ import { Star, StarHalf } from "lucide-react";
 
 const Courses = () => {
   const [courses] = useState(sample);
+  //Pagination for fecthing courses will be applied here
   const [loading] = useState(false);
   const navigate = useNavigate();
   const userInterests = [
     "Dart Programming",
     "Design Principles",
     "Model Evaluation",
-    "HTML Basics",
     "Connecting to APIs",
   ];
 
@@ -95,11 +95,11 @@ const Courses = () => {
             key={index}
             className="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden flex flex-col"
           >
-            <figure className="w-full h-52 mt-5 flex-shrink-0">
+            <figure className="w-full h-52 sm:mt-5 flex-shrink-0">
               <img
                 src={course.thumbnail}
                 alt={course.title}
-                className="w-full h-full m-7 rounded-3xl object-cover"
+                className="w-full h-full  object-cover sm:m-7 sm:rounded-3xl"
               />
             </figure>
             <div className="p-4 flex flex-col flex-grow">
