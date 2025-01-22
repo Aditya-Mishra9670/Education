@@ -6,5 +6,6 @@ import Error from "./Error";
 import Courses from "./Courses";
 import CourseIndividual from "./CourseIndividual";
 import Profile from "./Profile";
+import Settings from "./Settings";
 
-export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile}
+export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings}
