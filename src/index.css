@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .nunito-body {
   font-family: "Nunito", serif;
   font-optical-sizing: auto;
@@ -11,31 +10,61 @@
 }
 
 .gradient-text {
-    font-weight:bolder;
-    background: linear-gradient(360deg, #fefefe, #7f7f7f, #ffc75f, #126687);
-    background-size: 400% 400%;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-flow 3s ease infinite;
+  font-weight: bolder;
+  background: linear-gradient(360deg, #fefefe, #7f7f7f, #ffc75f, #126687);
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-flow 3s ease infinite;
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
   }
 
-  @keyframes gradient-flow {
-    0% {
-      background-position: 0% 50%;
-    }
-  
-    50% {
-      background-position: 100% 50%;
-    }
-  
-    100% {
-      background-position: 50% 0%;
-    }
+  50% {
+    background-position: 100% 50%;
   }
 
-  .signature {
-    font-family: "Dancing Script", cursive;
-    font-optical-sizing: auto;
-    font-weight:800;
-    font-style: normal;
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
+.signature {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+@layer utilities {
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+}
+
+.animate__fadeInLeft {
+  animation-name: fadeInLeft;
+}
+
+.animate__animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

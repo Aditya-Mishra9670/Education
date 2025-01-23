@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
-import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings } from "./pages";
+import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs } from "./pages";
+import { useThemeStore } from "./store/useThemeStore";
 
 function App() {
+  const {theme} = useThemeStore();
   return (
-    <div data-theme="dim" className="nunito-body">
+    <div data-theme={theme} className="nunito-body">
       <Header />
       <Routes>
         {/* Dynamic routes should be there after integrating backend and checking for authentication */}
@@ -16,6 +18,8 @@ function App() {
         <Route path="/courses/:id" element={<CourseIndividual />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/about" element={<AboutUs />} />
+
 
 
 

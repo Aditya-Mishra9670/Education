@@ -7,5 +7,6 @@ import Courses from "./Courses";
 import CourseIndividual from "./CourseIndividual";
 import Profile from "./Profile";
 import Settings from "./Settings";
+import AboutUs from "./About";
 
-export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings}
+export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings,AboutUs}

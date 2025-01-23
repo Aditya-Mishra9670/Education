@@ -8,5 +8,8 @@ import Steps from "./HomeComponents/Steps";
 import Cta from "./HomeComponents/Cta";
 import CourseSkeleton from "./Skeletons/CourseSkeleton"
 import ReportForm from "./ReportForm";
+import ChangePassword from "./ChangePassword";
+import ThemeChanger from "./ThemeChanger";
+import TrackReports from "./TrackReports";
 
-export {Header,Footer,MenuC,SearchBar,Hero,Compare,Steps,Cta,CourseSkeleton,ReportForm};
+export {Header,Footer,MenuC,SearchBar,Hero,Compare,Steps,Cta,CourseSkeleton,ReportForm,ThemeChanger,ChangePassword,TrackReports};
