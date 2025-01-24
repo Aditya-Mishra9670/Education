@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
-import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs } from "./pages";
+import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs, TermsOfUse, Cookies, Privacy, Contact } from "./pages";
 import { useThemeStore } from "./store/useThemeStore";
 
 function App() {
@@ -19,7 +19,10 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/about" element={<AboutUs />} />
-
+        <Route path="/terms" element={<TermsOfUse />} />
+        <Route path="/cookies" element={<Cookies />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/contact" element={<Contact />} />
 
 
 

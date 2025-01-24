@@ -21,7 +21,6 @@ const Profile = () => {
 
     reader.onload = () => {
       const base64Image = reader.result;
-      setUpdatedUser({ ...updatedUser, profilePic: base64Image });
       setUpdateData({ ...updateData, profilePic: base64Image });
     };
   };
@@ -32,7 +31,6 @@ const Profile = () => {
       if (interest.length <= 8 && !updateData.interests.includes(interest)) {
         const updatedInterests = [...updateData.interests, interest];
         setUpdateData({ ...updateData, interests: updatedInterests });
-        setUpdatedUser({ ...updatedUser, interest: updatedInterests });
         e.target.value = "";
       }
     }
@@ -41,21 +39,30 @@ const Profile = () => {
   const removeInterest = (index) => {
     const updatedInterests = updateData.interests.filter((_, i) => i !== index);
     setUpdateData({ ...updateData, interests: updatedInterests });
-    setUpdatedUser({ ...updatedUser, interest: updatedInterests });
   };
 
   const saveData = async () => {
     setIsUpdatingProfile(true);
     setTimeout(() => {
       setIsUpdatingProfile(false);
+      setUpdatedUser({ ...updatedUser, ...updateData });
+      setShowOptions(false);
     }, 2000);
+  };
+
+  const resetChanges = () => {
+    setUpdateData({
+      profilePic: updatedUser.profilePic,
+      name: updatedUser.name,
+      interests: updatedUser.interest,
+    });
     setShowOptions(false);
   };
 
   const hasChanges =
-    updateData.profilePic !== user.profilePic ||
-    updateData.name !== user.name ||
-    JSON.stringify(updateData.interests) !== JSON.stringify(user.interest);
+    updateData.profilePic !== updatedUser.profilePic ||
+    updateData.name !== updatedUser.name ||
+    JSON.stringify(updateData.interests) !== JSON.stringify(updatedUser.interest);
 
   return (
     <div className="pt-20 min-h-screen bg-base-100">
@@ -70,7 +77,7 @@ const Profile = () => {
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={updatedUser.profilePic}
+                src={updateData.profilePic}
                 alt="Profile"
                 loading="lazy"
                 className="w-32 h-32 rounded-full ring-4 ring-white object-cover shadow-md"
@@ -109,7 +116,8 @@ const Profile = () => {
               <input
                 className="input input-bordered w-full"
                 readOnly={!showOptions}
-                placeholder={updatedUser.name}
+                value={updateData.name}
+                placeholder="Enter your name"
                 onChange={(e) =>
                   setUpdateData({ ...updateData, name: e.target.value })
                 }
@@ -161,7 +169,7 @@ const Profile = () => {
             <>
               <button
                 className="btn btn-secondary"
-                onClick={() => setShowOptions(false)}
+                onClick={resetChanges}
               >
                 Cancel
               </button>

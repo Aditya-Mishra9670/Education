@@ -53,9 +53,24 @@
   animation-name: fadeInLeft;
 }
 
+.animate__fadeInRight{
+  animation-name: fadeInRight;
+}
+
 .animate__animated {
   animation-duration: 1s;
   animation-fill-mode: both;
+}
+
+@keyframes fadeInRight{
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes fadeInLeft {

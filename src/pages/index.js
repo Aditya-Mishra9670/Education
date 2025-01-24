@@ -8,5 +8,9 @@ import CourseIndividual from "./CourseIndividual";
 import Profile from "./Profile";
 import Settings from "./Settings";
 import AboutUs from "./About";
+import TermsOfUse from "./Terms";
+import Cookies from "./Cookies";
+import Privacy from "./Privacy";
+import Contact from "./Contact"
 
-export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings,AboutUs}
+export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings,AboutUs,TermsOfUse,Cookies,Privacy,Contact}
