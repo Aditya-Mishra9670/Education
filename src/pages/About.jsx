@@ -3,7 +3,7 @@ import { Linkedin, Twitter, GithubIcon } from "lucide-react";
 
 const AboutUs = () => {
   return (
-    <>
+    <div className="w-full">
       <section
         id="hero"
         className="min-h-[70vh] bg-base-200 text-base-content pt-16"
@@ -116,7 +116,7 @@ const AboutUs = () => {
             <div className="w-24 h-1 bg-primary mx-auto mb-8" />
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-neutral p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300 animate-fadeInUp">
+            <div className=" p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300 animate-fadeInUp">
               <div className="text-primary mb-4">
                 <svg
                   className="w-12 h-12"
@@ -131,13 +131,13 @@ const AboutUs = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-bold mb-4">Quality Education</h3>
-              <p className="text-neutral-content">
+              <p className="-content">
                 Providing structured, high-quality educational content that's
                 accessible to everyone, everywhere.
               </p>
             </div>
             <div
-              className="bg-neutral p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300 animate-fadeInUp"
+              className=" p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300 animate-fadeInUp"
               style={{ animationDelay: "0.2s" }}
             >
               <div className="text-primary mb-4">
@@ -154,13 +154,13 @@ const AboutUs = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-bold mb-4">Progress Tracking</h3>
-              <p className="text-neutral-content">
+              <p className="-content">
                 Empowering learners with tools to monitor their progress and
                 stay motivated throughout their learning journey.
               </p>
             </div>
             <div
-              className="bg-neutral p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300 animate-fadeInUp"
+              className=" p-8 rounded-lg shadow-lg transform hover:-translate-y-2 transition duration-300 animate-fadeInUp"
               style={{ animationDelay: "0.4s" }}
             >
               <div className="text-primary mb-4">
@@ -177,13 +177,13 @@ const AboutUs = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-bold mb-4">Certification</h3>
-              <p className="text-neutral-content">
+              <p className="-content">
                 Recognizing achievements through verified certificates that
                 validate learners' skills and knowledge.
               </p>
             </div>
           </div>
-          <div className="mt-16 bg-neutral-focus text-neutral-content p-8 rounded-xl animate-fadeIn">
+          <div className="mt-16  -content p-8 rounded-xl animate-fadeIn">
             <div className="max-w-3xl mx-auto text-center">
               <h3 className="text-2xl font-bold mb-6">Why StudyTube Exists</h3>
               <p className="leading-relaxed mb-8">
@@ -208,7 +208,7 @@ const AboutUs = () => {
               Meet Our Founders
             </h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-8"></div>
-            <p className="text-neutral-content max-w-2xl mx-auto">
+            <p className="-content max-w-2xl mx-auto">
               The visionaries behind StudyTube who are passionate about
               transforming education
             </p>
@@ -225,16 +225,16 @@ const AboutUs = () => {
               </div>
               <header id="founder-aditya" className="text-center">
                 <h3 className="text-2xl font-bold mb-2">Aditya Mishra</h3>
-                <p className="text-secondary mb-4">Co-Founder</p>
+                <p className=" font-semibold mb-4">Co-Founder</p>
               </header>
-              <p className="text-neutral-content mb-6 text-center">
+              <p className="-content mb-6 text-center">
                 Passionate about making quality education accessible to everyone
                 through technology and innovation.
               </p>
               <footer className="flex justify-center space-x-4">
                 <a
                   href="#"
-                  className="text-neutral hover:text-secondary transition-colors"
+                  className=" hover:text-secondary transition-colors"
                   aria-label="LinkedIn profile of Aditya Mishra"
                 >
                   <svg
@@ -248,7 +248,7 @@ const AboutUs = () => {
                 </a>
                 <a
                   href="#"
-                  className="text-neutral hover:text-secondary transition-colors"
+                  className=" hover:text-secondary transition-colors"
                   aria-label="Twitter profile of Aditya Mishra"
                 >
                   <svg
@@ -273,16 +273,16 @@ const AboutUs = () => {
               </div>
               <header id="founder-dheeraj" className="text-center">
                 <h3 className="text-2xl font-bold mb-2">Dheeraj Verma</h3>
-                <p className="text-secondary mb-4">Co-Founder</p>
+                <p className="font-semibold mb-4">Co-Founder</p>
               </header>
-              <p className="text-neutral-content mb-6 text-center">
+              <p className="-content mb-6 text-center">
                 Dedicated to creating innovative educational solutions that
                 empower learners worldwide.
               </p>
               <footer className="flex justify-center space-x-4">
                 <a
                   href="#"
-                  className="text-neutral hover:text-secondary transition-colors"
+                  className=" hover:text-secondary transition-colors"
                   aria-label="LinkedIn profile of Dheeraj Verma"
                 >
                   <svg
@@ -296,7 +296,7 @@ const AboutUs = () => {
                 </a>
                 <a
                   href="#"
-                  className="text-neutral hover:text-secondary transition-colors"
+                  className=" hover:text-secondary transition-colors"
                   aria-label="Twitter profile of Dheeraj Verma"
                 >
                   <svg
@@ -474,7 +474,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      <section id="stats" className="py-20 bg-neutral text-neutral-content">
+      <section id="stats" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -571,7 +571,7 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

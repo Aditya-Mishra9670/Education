@@ -11,6 +11,7 @@ import AboutUs from "./About";
 import TermsOfUse from "./Terms";
 import Cookies from "./Cookies";
 import Privacy from "./Privacy";
-import Contact from "./Contact"
+import Contact from "./Contact";
+import MyCourses from "./MyCourses";
 
-export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings,AboutUs,TermsOfUse,Cookies,Privacy,Contact}
+export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses}

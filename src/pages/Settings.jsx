@@ -6,7 +6,7 @@ const Settings = () => {
   const [activeTab, setActiveTab] = useState("password");
 
   return (
-    <main className="flex  h-screen justify-center pt-20 px-5 mb-5 bg-base-100">
+    <main className="flex h-screen justify-center pt-20 px-5 mb-5 bg-base-100">
       <nav className="w-1/5 mt-5 space-y-8 border-r pr-1 md:pr-5">
         <button
           className={`btn btn-sm sm:btn-md btn-ghost w-full justify-start ${

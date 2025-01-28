@@ -20,9 +20,9 @@ const CourseIndividual = () => {
   };
 
   return (
-    <main className="pt-20 bg-base-100 min-h-screen flex flex-col items-center">
+    <main className="pt-[69px] bg-base-100 min-h-screen flex flex-col items-center">
       <section
-        className="w-full h-72 bg-cover bg-center relative"
+        className="w-full h-72 bg-contain  bg-center relative"
         style={{ backgroundImage: `url(${course?.thumbnail})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-base-100" />

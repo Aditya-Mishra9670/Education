@@ -127,15 +127,76 @@ const courses = [
   },
 ];
 
-
 export const user = {
   name: "Dheeraj Verma",
   profilePic: "https://avatars.githubusercontent.com/u/161463894?v=4",
   email: "dheeraj.verma@example.com",
   interest: ["Technology", "Music", "Travel"],
   role: "admin",
-  createdAt: new Date().toISOString()
+  createdAt: new Date().toISOString(),
 };
 
+export const enrollments = [
+  {
+    _id: "67978797fa6a5f272eac7f58",
+    courseId: {
+      _id: "67978797fa6a5f272eac7f57",
+      title: "Introduction to Web Development",
+      thumbnail:
+        "https://miro.medium.com/v2/resize:fit:1400/1*fHrAZJ1_L0Ff9dvVexL5_A.png",
+      description:
+        "Learn the basics of HTML, CSS, and JavaScript to build your first website.",
+      language: "English",
+      category: "Web Development",
+      tags: [
+        "HTML Basics",
+        "CSS Styling",
+        "Introduction to JavaScript",
+        "Building a Responsive Webpage",
+      ],
+      level: "Beginner",
+      rating: 5,
+      teacherName: "Jane Doe",
+    },
+    studentId: "67868887893f5848be381bfb",
+    completed: false,
+    completedAt: null,
+    certificateUrl:
+      "https://res.cloudinary.com/dzitsseoz/image/upload/v1738048243/StudyTube/Certificates/Dheeraj%20Verma-Web%20development-certificate.pdf",
+    progress: 92,
+    createdAt: "2025-01-27T13:18:15.936+00:00",
+    updatedAt: "2025-01-28T07:10:44.215+00:00",
+  },
+  {
+    _id: "67978797fa6a5f272eac7f51",
+    courseId: {
+      _id: "67978797fa6a5f272eac7f57",
+      title: "Introduction to Data Science",
+      thumbnail:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZj8Xh1RTHBXtBAuOaNENG7OQiFROXR9vayA&s",
+      description:
+        "Master Data Science from the basics and learn how to apply it in real-world scenarios.",
+      language: "English",
+      category: "Data Sceince",
+      tags: [
+        "Data Science Basics",
+        "Data Analysis",
+        "Data Visualization",
+        "Machine Learning",
+      ],
+      level: "Beginner",
+      rating: 4.7,
+      teacherName: "Krish Naik",
+    },
+    studentId: "67868887893f5848be381bfb",
+    completed: false,
+    completedAt: null,
+    certificateUrl:
+      null,
+    progress: 32,
+    createdAt: "2025-01-27T13:18:15.936+00:00",
+    updatedAt: "2025-01-28T07:10:44.215+00:00",
+  },
+];
 
 export default courses;
