@@ -1,5 +1,4 @@
 import React from "react";
-import Hero1Img from "../../../public/Hero1.png";
 import { Link } from "react-router-dom";
 
 
@@ -38,7 +37,7 @@ const Hero = () => {
       </div>
       <div className="relative">
         <img
-          src={Hero1Img}
+          src="/Hero1.png"
           alt="Empowered Learning"
           className="w-[90%] mx-auto object-contain"
         />

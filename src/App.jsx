@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
-import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs, TermsOfUse, Cookies, Privacy, Contact, MyCourses } from "./pages";
+import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs, TermsOfUse, Cookies, Privacy, Contact, MyCourses, CreateCourse } from "./pages";
 import { useThemeStore } from "./store/useThemeStore";
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/my-courses" element={<MyCourses />} />
+        <Route path="/create-course" element={<CreateCourse />} />
 
 
 
