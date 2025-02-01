@@ -14,5 +14,6 @@ import Privacy from "./Privacy";
 import Contact from "./Contact";
 import MyCourses from "./MyCourses";
 import CreateCourse from "./CreateCourse";
+import AdminDashboard from "./AdminDashboard";
 
-export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses,CreateCourse}
+export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses,CreateCourse,AdminDashboard}; 
