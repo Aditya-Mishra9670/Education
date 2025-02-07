@@ -1,10 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
-import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs, TermsOfUse, Cookies, Privacy, Contact, MyCourses, CreateCourse } from "./pages";
-import  AdminDashboard  from "./pages/AdminDashboard.jsx";
+import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs, TermsOfUse, Cookies, Privacy, Contact, MyCourses, CreateCourse, AddVideo, AllUsers, Reports } from "./pages";
+import  AdminDashboard  from "./pages/adminPages/AdminDashboard.jsx";
 import { useThemeStore } from "./store/useThemeStore";
-import AllUsers from "./pages/AllUsers.jsx";
-import Reports from "./pages/Reports.jsx";
 
 function App() {
   const {theme} = useThemeStore();
@@ -27,7 +25,11 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/my-courses" element={<MyCourses />} />
-        <Route path="/create-course" element={<CreateCourse />} />
+
+
+        <Route path="/teacher/course/create-course" element={<CreateCourse />} />
+        <Route path="/teacher/course/add-video/:courseId" element={<AddVideo />} />
+
         <Route path = "/admin" element = {<AdminDashboard />} />
         <Route path="/admin/all-users" element={<AllUsers />} />
         <Route path="/admin/reports" element={<Reports />} />

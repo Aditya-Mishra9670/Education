@@ -13,7 +13,10 @@ import Cookies from "./Cookies";
 import Privacy from "./Privacy";
 import Contact from "./Contact";
 import MyCourses from "./MyCourses";
-import CreateCourse from "./CreateCourse";
-import AdminDashboard from "./AdminDashboard";
+import CreateCourse from "./teacherPages/CreateCourse";
+import AdminDashboard from "./adminPages/AdminDashboard";
+import AllUsers from "./adminPages/AllUsers";
+import AddVideo from "./teacherPages/AddVideo";
+import Reports from "./adminPages/Reports";
 
-export {Login,Signup,Home,ForgotPass,Error,Courses,CourseIndividual,Profile,Settings,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses,CreateCourse,AdminDashboard}; 
+export {Login,Signup,Home,ForgotPass,Error,Courses,Reports,AllUsers,AddVideo,CourseIndividual,Profile,Settings,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses,CreateCourse,AdminDashboard}; 

@@ -128,7 +128,7 @@ const Profile = () => {
                 <Mail className="w-4 h-4" />
                 Email Address
               </div>
-              <p className="input input-bordered w-full bg-base-300 cursor-not-allowed">
+              <p className="input input-bordered w-full bg-base-300 pt-3 cursor-not-allowed">
                 {updatedUser?.email}
               </p>
             </div>

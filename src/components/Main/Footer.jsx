@@ -87,9 +87,9 @@ const Footer = () => {
         </nav>
       </footer>
 
-      <footer className="footer text-base-content border-t border-gray-700 px-6 py-4 flex flex-col lg:flex-row items-center justify-between">
+      <footer className="footer text-base-content border-t border-primary-content px-6 py-4 flex flex-col lg:flex-row items-center justify-between">
         <aside className="flex-1 text-center lg:text-left">
-          <p className="text-sm lg:text-base font-medium text-gray-500">
+          <p className="text-sm lg:text-base font-medium">
             StudyTube - Empowering Learners Everywhere
             <br />
             Unlock your potential with top-quality resources.
