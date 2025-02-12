@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
-import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs, TermsOfUse, Cookies, Privacy, Contact, MyCourses, CreateCourse, AddVideo, AllUsers, Reports } from "./pages";
+import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs, TermsOfUse, Cookies, Privacy, Contact, MyCourses, CreateCourse, AddVideo, AllUsers, Reports, Streaming } from "./pages";
 import  AdminDashboard  from "./pages/adminPages/AdminDashboard.jsx";
 import { useThemeStore } from "./store/useThemeStore";
 
@@ -25,6 +25,7 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/my-courses" element={<MyCourses />} />
+        <Route path="/course/video/:id" element={<Streaming />} />
 
 
         <Route path="/teacher/course/create-course" element={<CreateCourse />} />

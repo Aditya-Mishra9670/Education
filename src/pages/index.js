@@ -18,5 +18,6 @@ import AdminDashboard from "./adminPages/AdminDashboard";
 import AllUsers from "./adminPages/AllUsers";
 import AddVideo from "./teacherPages/AddVideo";
 import Reports from "./adminPages/Reports";
+import Streaming from "./Streaming";
 
-export {Login,Signup,Home,ForgotPass,Error,Courses,Reports,AllUsers,AddVideo,CourseIndividual,Profile,Settings,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses,CreateCourse,AdminDashboard}; 
+export {Login,Signup,Home,ForgotPass,Error,Courses,Reports,AllUsers,AddVideo,CourseIndividual,Profile,Settings,Streaming,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses,CreateCourse,AdminDashboard}; 

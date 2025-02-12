@@ -39,25 +39,25 @@ const Reports = () => {
             <h1 className="text-3xl font-bold mb-8 text-center">Reports</h1>
             {reports.length === 0 ? (
                 <div className="flex-grow flex justify-center items-center">
-                    <h2 className="text-2xl font-semibold text-gray-500">No Reports Available</h2>
+                    <h2 className="text-2xl font-semibold ">No Reports Available</h2>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-grow">
                     {reports.map((report, index) => {
                         if (reports.length === index + 1) {
                             return (
-                                <div ref={lastReportElementRef} key={report._id} className="card bg-white shadow-md rounded-lg p-6">
-                                    <h2 className="text-xl font-semibold mb-2 text-blue-600">{report.title}</h2>
-                                    <p className="text-gray-700 mb-4">{report.description}</p>
-                                    <p className="text-gray-500 text-sm">Created At: {new Date(report.createdAt).toLocaleDateString()}</p>
+                                <div ref={lastReportElementRef} key={report._id} className="card bg-base-200 shadow-md rounded-lg p-6">
+                                    <h2 className="text-xl font-semibold mb-2 text-primary">{report.title}</h2>
+                                    <p className=" mb-4">{report.description}</p>
+                                    <p className=" text-sm">Created At: {new Date(report.createdAt).toLocaleDateString()}</p>
                                 </div>
                             );
                         } else {
                             return (
-                                <div key={report._id} className="card bg-white shadow-md rounded-lg p-6">
-                                    <h2 className="text-xl font-semibold mb-2 text-blue-600">{report.title}</h2>
-                                    <p className="text-gray-700 mb-4">{report.description}</p>
-                                    <p className="text-gray-500 text-sm">Created At: {new Date(report.createdAt).toLocaleDateString()}</p>
+                                <div key={report._id} className="card bg-base-200 shadow-md rounded-lg p-6">
+                                    <h2 className="text-xl font-semibold mb-2 text-primary">{report.title}</h2>
+                                    <p className=" mb-4">{report.description}</p>
+                                    <p className=" text-sm">Created At: {new Date(report.createdAt).toLocaleDateString()}</p>
                                 </div>
                             );
                         }
