@@ -1,10 +1,40 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff, Globe, Facebook } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Globe, Facebook, AlignStartVertical } from "lucide-react";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password,setPassword] = useState("");
 
+  const handleLogin = async (event) =>{
+    event.preventDefault();
+
+    try{
+      const url = "http://localhost:8000/auth/login";
+      const response = await fetch(url, {
+        method :"POST",
+        headers: {
+          "Content-Type" :"application/json",
+
+        },
+        body: JSON.stringify({email,password}),
+      });
+
+      const data = await response.json();
+
+      if(response.ok){
+        console.log("Login successful:",data);
+        alert("Login successful !");
+      }else{
+        console.log("Login failed");
+        alert(data.message);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }
+  
   return (
     <div className="min-h-screen p-5 sm:p-20 flex items-center justify-center bg-base-200">
       <div className="w-full max-w-6xl flex bg-base-100 rounded-lg gap-20 shadow-xl overflow-hidden">
@@ -30,13 +60,17 @@ const Login = () => {
           <p className="text-sm text-base-content text-center mt-2">
             Access your account and continue learning
           </p>
-          <form className="mt-8">
+          <form className="mt-8" onSubmit={handleLogin}>
             <div className="mb-5 relative">
               <Mail className="absolute left-3 top-3 text-primary" />
               <input
                 type="email"
+                id="email"
                 placeholder="Email"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="mb-5 relative">
@@ -44,7 +78,11 @@ const Login = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
+                id = "password"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
+                required
               />
               <div
                 className="absolute right-3 text-base-content top-3 cursor-pointer"
@@ -62,6 +100,7 @@ const Login = () => {
               </Link>
             </div>
             <button
+        
               type="submit"
               className="btn bg-primary text-primary-content w-full py-3 rounded-lg hover:bg-primary-focus transition duration-300"
             >
