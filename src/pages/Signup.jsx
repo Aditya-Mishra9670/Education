@@ -2,9 +2,43 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Lock, User, Eye, EyeOff, Globe, Facebook } from "lucide-react";
 
+//username, email, password, role
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [username,setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const [role,setRole] = useState("");
+
+  const handleSignUp = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    try {
+      const url = "http://localhost:8000/auth/signup";
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          role : "student"
+        })
+      });
+      const data = await response.json();
+      alert(data.message);
+      if (response.ok) {
+        console.log("success bro", data);
+        alert("success bro");
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error("error occurred in calling handleSignUp", err);
+    }
+  };
 
   return (
     <div className="min-h-screen p-5 sm:p-20 flex items-center justify-center bg-base-200">
@@ -16,13 +50,16 @@ const Signup = () => {
           <p className="text-sm text-base-content text-center mt-2">
             Create an account and start learning
           </p>
-          <form className="mt-8">
+          <form className="mt-8" onSubmit={handleSignUp}>
             <div className="mb-5 relative">
               <User className="absolute left-3 top-3 text-primary" />
               <input
                 type="text"
                 placeholder="Full Name"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
+                value={username}
+                onChange={(e)=>setUsername(e.target.value)}
+
               />
             </div>
             <div className="mb-5 relative">
@@ -31,6 +68,8 @@ const Signup = () => {
                 type="email"
                 placeholder="Email"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
               />
             </div>
             <div className="mb-5 relative">
@@ -39,6 +78,8 @@ const Signup = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
               />
               <div
                 className="absolute right-3 top-3 text-base-content cursor-pointer"
