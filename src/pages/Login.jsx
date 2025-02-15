@@ -1,40 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff, Globe, Facebook, AlignStartVertical } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Globe, Facebook, Loader } from "lucide-react";
+import toast from "react-hot-toast";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
-  const [password,setPassword] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLogin = async (event) =>{
-    event.preventDefault();
+  const { login, isLoggingIn } = useAuthStore();
 
-    try{
-      const url = "http://localhost:8000/auth/login";
-      const response = await fetch(url, {
-        method :"POST",
-        headers: {
-          "Content-Type" :"application/json",
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    login({ email, password });
+  };
 
-        },
-        body: JSON.stringify({email,password}),
-      });
-
-      const data = await response.json();
-
-      if(response.ok){
-        console.log("Login successful:",data);
-        alert("Login successful !");
-      }else{
-        console.log("Login failed");
-        alert(data.message);
-      }
-    }catch(err){
-      console.log(err);
-    }
-  }
-  
   return (
     <div className="min-h-screen p-5 sm:p-20 flex items-center justify-center bg-base-200">
       <div className="w-full max-w-6xl flex bg-base-100 rounded-lg gap-20 shadow-xl overflow-hidden">
@@ -69,7 +50,7 @@ const Login = () => {
                 placeholder="Email"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -78,10 +59,10 @@ const Login = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                id = "password"
+                id="password"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
                 value={password}
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               <div
@@ -92,7 +73,10 @@ const Login = () => {
               </div>
             </div>
             <div className="flex justify-between items-center mb-6">
-              <Link to="/forgot-password" className="text-primary hover:underline">
+              <Link
+                to="/forgot-password"
+                className="text-primary hover:underline"
+              >
                 Forgot Password?
               </Link>
               <Link to="/signup" className="text-primary hover:underline">
@@ -100,11 +84,18 @@ const Login = () => {
               </Link>
             </div>
             <button
-        
               type="submit"
-              className="btn bg-primary text-primary-content w-full py-3 rounded-lg hover:bg-primary-focus transition duration-300"
+              className="btn btn-primary w-full"
+              disabled={isLoggingIn}
             >
-              Log In
+              {isLoggingIn ? (
+                <>
+                  <Loader className="size-5 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
             </button>
           </form>
           <div className="divider text-base-content my-8">OR</div>

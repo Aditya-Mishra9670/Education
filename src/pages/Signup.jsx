@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Lock, User, Eye, EyeOff, Globe, Facebook } from "lucide-react";
+import toast from "react-hot-toast";
 
 //username, email, password, role
 const Signup = () => {
@@ -28,7 +29,8 @@ const Signup = () => {
         })
       });
       const data = await response.json();
-      alert(data.message);
+      console.log(data);
+      toast.success(data?.message);
       if (response.ok) {
         console.log("success bro", data);
         alert("success bro");

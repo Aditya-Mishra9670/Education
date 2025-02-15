@@ -1,18 +1,51 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
-import { Login, Signup, Home, ForgotPass, Error, Courses, CourseIndividual, Profile, Settings, AboutUs, TermsOfUse, Cookies, Privacy, Contact, MyCourses, CreateCourse, AddVideo, AllUsers, Reports, Streaming } from "./pages";
-import  AdminDashboard  from "./pages/adminPages/AdminDashboard.jsx";
+import {
+  Login,
+  Signup,
+  Home,
+  ForgotPass,
+  Error,
+  Courses,
+  CourseIndividual,
+  Profile,
+  Settings,
+  AboutUs,
+  TermsOfUse,
+  Cookies,
+  Privacy,
+  Contact,
+  MyCourses,
+  CreateCourse,
+} from "./pages";
 import { useThemeStore } from "./store/useThemeStore";
+import { Toaster } from "react-hot-toast";
+import { useAuthStore } from "./store/useAuthStore";
+import { useEffect } from "react";
+import { Loader } from "lucide-react";
 
 function App() {
-  const {theme} = useThemeStore();
+  const { theme } = useThemeStore();
+  const { user, getUser, checkingAuth } = useAuthStore();
+
+  useEffect(()=>{
+    getUser();
+  },[getUser])
+
+  if (checkingAuth && !user)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="size-10 animate-spin" />
+      </div>
+    );
+
   return (
     <div data-theme={theme} className="nunito-body">
       <Header />
       <Routes>
         {/* Dynamic routes should be there after integrating backend and checking for authentication */}
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login"  element={ !user ? <Login /> :<Navigate to="/"/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPass />} />
         <Route path="/courses" element={<Courses />} />
@@ -25,20 +58,12 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/my-courses" element={<MyCourses />} />
-        <Route path="/course/video/:id" element={<Streaming />} />
-
-
-        <Route path="/teacher/course/create-course" element={<CreateCourse />} />
-        <Route path="/teacher/course/add-video/:courseId" element={<AddVideo />} />
-
-        <Route path = "/admin" element = {<AdminDashboard />} />
-        <Route path="/admin/all-users" element={<AllUsers />} />
-        <Route path="/admin/reports" element={<Reports />} />
-
+        <Route path="/create-course" element={<CreateCourse />} />
 
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
+      <Toaster />
     </div>
   );
 }

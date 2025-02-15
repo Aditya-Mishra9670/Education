@@ -2,7 +2,6 @@ import {
   ArrowBigRightDash,
   ChevronRight,
   Clock,
-  FileText,
   LogOut,
   Settings,
   Star,
@@ -11,8 +10,14 @@ import {
 } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const Menu = ({ isOpen, isClose }) => {
+  const { logout, isLoggingOut } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <div
       className={`fixed top-[64px] right-0 ${
@@ -88,7 +93,10 @@ const Menu = ({ isOpen, isClose }) => {
           <ChevronRight className="h-5 w-5" />
         </Link>
         <button
-          onClick={isClose}
+          onClick={() => {
+            handleLogout();
+            isClose;
+          }}
           className="flex items-center justify-between py-3 px-4 bg-base-200 rounded-md hover:bg-primary hover:text-white transition"
         >
           <div className="flex items-center gap-3">

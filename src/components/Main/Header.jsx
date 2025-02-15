@@ -2,9 +2,10 @@ import { Bell, Lock, Menu, Search, X } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { SearchBar, MenuC } from "../index";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const Header = () => {
-  const userAuth = true;
+  const {user} = useAuthStore();
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -38,7 +39,7 @@ const Header = () => {
           <span className="hidden sm:inline">Search</span>
         </button>
 
-        {userAuth && (
+        {user && (
           <Link
             to="/notifications"
             className="btn btn-sm gap-2 transition-colors"
@@ -48,7 +49,7 @@ const Header = () => {
           </Link>
         )}
 
-        {userAuth ? (
+        {user ? (
           <button
             className="btn btn-sm gap-2 transition-colors"
             onClick={() => {
@@ -68,8 +69,11 @@ const Header = () => {
         )}
       </div>
 
-      <MenuC isOpen={openMenu} isClose={() => setOpenMenu(false)} />
-      <SearchBar isOpen={showSearchBar} isClose={() => setShowSearchBar(false)} />
+      {user && <MenuC isOpen={openMenu} isClose={() => setOpenMenu(false)} />}
+      <SearchBar
+        isOpen={showSearchBar}
+        isClose={() => setShowSearchBar(false)}
+      />
     </div>
   );
 };
