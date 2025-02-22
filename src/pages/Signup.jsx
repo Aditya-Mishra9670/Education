@@ -30,12 +30,12 @@ const Signup = () => {
       });
       const data = await response.json();
       console.log(data);
-      toast.success(data?.message);
+      // toast.success(data?.message);
       if (response.ok) {
         console.log("success bro", data);
         alert("success bro");
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (err) {
       console.error("error occurred in calling handleSignUp", err);

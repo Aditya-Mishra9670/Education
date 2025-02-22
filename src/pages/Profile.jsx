@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { user } from "../sampleStore/sample";
+import { useAuthStore } from "../store/useAuthStore";
+import { defaultuser } from "../sampleStore/sample"; 
 import { Camera, User, Mail, Heart, X } from "lucide-react";
 
 const Profile = () => {
-  const [updatedUser, setUpdatedUser] = useState(user);
+  const user = useAuthStore((state) => state.user);
+  const [updatedUser, setUpdatedUser] = useState(user || defaultuser);
   const [showOptions, setShowOptions] = useState(false);
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
   const [updateData, setUpdateData] = useState({
     profilePic: updatedUser.profilePic,
     name: updatedUser.name,
-    interests: updatedUser.interest,
+    interests: updatedUser.interests || [], 
   });
 
   const handleImageUpload = async (e) => {

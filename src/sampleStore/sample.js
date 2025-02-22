@@ -127,7 +127,7 @@ const courses = [
   },
 ];
 
-export const user = {
+export const defaultuser  = {
   name: "Dheeraj Verma",
   profilePic: "https://avatars.githubusercontent.com/u/161463894?v=4",
   email: "dheeraj.verma@example.com",
