@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../store/useAuthStore";
 
 
 
 const Hero = () => {
-    const userAuth = false;
+    const {user} = useAuthStore()
   return (
     <>
       <div>
@@ -25,7 +26,7 @@ const Hero = () => {
 
         <div className="mt-8 flex gap-6">
           <Link
-            to={userAuth ? "/explore" : "/login"}
+            to={user ? "/courses" : "/login"}
             className="btn btn-primary hover:btn-outline"
           >
             Get Started

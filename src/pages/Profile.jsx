@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { defaultuser } from "../sampleStore/sample"; 
 import { Camera, User, Mail, Heart, X } from "lucide-react";
 
 const Profile = () => {
   const user = useAuthStore((state) => state.user);
-  const [updatedUser, setUpdatedUser] = useState(user || defaultuser);
+  const [updatedUser, setUpdatedUser] = useState(use);
   const [showOptions, setShowOptions] = useState(false);
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
   const [updateData, setUpdateData] = useState({

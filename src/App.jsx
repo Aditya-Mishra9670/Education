@@ -46,19 +46,19 @@ function App() {
         {/* Dynamic routes should be there after integrating backend and checking for authentication */}
         <Route path="/" element={<Home />} />
         <Route path="/login"  element={ !user ? <Login /> :<Navigate to="/"/>} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPass />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/:id" element={<CourseIndividual />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/signup" element={ !user ? <Signup /> :<Navigate to="/"/>}  />
+        <Route path="/forgot-password" element={ !user ? <ForgotPass /> :<Navigate to="/"/>}  />
+        <Route path="/courses" element={ user ? <Courses /> :<Navigate to="/login"/>}  />
+        <Route path="/courses/:id" element={ user ? <CourseIndividual /> :<Navigate to="/login"/>} />
+        <Route path="/profile" element={ user ? <Profile /> :<Navigate to="/login"/>}  />
         <Route path="/settings" element={<Settings />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/terms" element={<TermsOfUse />} />
         <Route path="/cookies" element={<Cookies />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/my-courses" element={<MyCourses />} />
-        <Route path="/create-course" element={<CreateCourse />} />
+        <Route path="/my-courses" element={ user ? <MyCourses /> :<Navigate to="/login"/>}  />
+        <Route path="/create-course" element={ user.role === "teacher" ? <CreateCourse /> :<Navigate to="/login"/>}  />
 
         <Route path="*" element={<Error />} />
       </Routes>
