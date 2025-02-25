@@ -9,9 +9,13 @@ import {
   Image,
   Plus,
   Tag,
+  Loader,
 } from "lucide-react";
+import toast from "react-hot-toast";
+import { useUserStore } from "../../store/useuserStore";
 
 const CreateCourse = () => {
+  const {createCourse,creatingCourse} = useUserStore();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -29,7 +33,14 @@ const CreateCourse = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, thumbnail: e.target.files[0] });
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload =  () => {
+      const base64Image = reader.result;
+      setFormData({ ...formData, thumbnail: base64Image });
+    };
   };
 
   const handleTagInput = (e) => {
@@ -51,7 +62,20 @@ const CreateCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.language ||
+      !formData.level ||
+      !formData.category ||
+      !formData.syllabus ||
+      !formData.thumbnail ||
+      formData.tags.length === 0
+    ) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+    createCourse(formData);
     setFormData({
       title: "",
       description: "",
@@ -67,13 +91,10 @@ const CreateCourse = () => {
   return (
     <div className="container pt-[69px] mx-auto px-4 py-12">
       <h1 className="text-4xl lg:text-5xl font-extrabold text-base-content mb-8 text-center flex items-center justify-center gap-3">
-        Create New Course
+        Add New Course
       </h1>
 
-      <div
-        
-        className="max-w-3xl mx-auto bg-base-200 p-8 rounded-lg shadow-lg"
-      >
+      <div className="max-w-3xl mx-auto bg-base-200 p-8 rounded-lg shadow-lg">
         <div className="space-y-6">
           <div>
             <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
@@ -224,8 +245,9 @@ const CreateCourse = () => {
               onClick={handleSubmit}
               className="btn btn-primary px-8 py-3 text-lg hover:btn-outline flex items-center gap-2 mx-auto"
             >
-              <Plus className="w-5 h-5" />
-              Create Course
+              {!creatingCourse && <Plus className="w-5 h-5" />}
+              {creatingCourse && <Loader className=" text-primary-content loading-spinner"/>}
+              {creatingCourse ?"Creating" : "Create Course"}
             </button>
           </div>
         </div>

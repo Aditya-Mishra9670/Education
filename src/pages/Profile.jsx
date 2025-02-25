@@ -4,7 +4,7 @@ import { Camera, User, Mail, Heart, X } from "lucide-react";
 
 const Profile = () => {
   const user = useAuthStore((state) => state.user);
-  const [updatedUser, setUpdatedUser] = useState(use);
+  const [updatedUser, setUpdatedUser] = useState(user);
   const [showOptions, setShowOptions] = useState(false);
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
   const [updateData, setUpdateData] = useState({

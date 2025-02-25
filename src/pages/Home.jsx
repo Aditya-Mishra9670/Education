@@ -10,6 +10,11 @@ const Home = () => {
       <header className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <Hero/>
       </header>
+      <Link to="create-course" >Create Course</Link>
+      <Link to="course/addVideo" >Add Video</Link>
+      <Link to="courses/video" >Watch Video</Link>
+
+      
 
       <main className="max-w-7xl mx-auto px-6 py-16 space-y-12">
         <Compare/>
