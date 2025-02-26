@@ -52,7 +52,7 @@ function App() {
         <Route path="/forgot-password" element={ !user ? <ForgotPass /> :<Navigate to="/"/>}  />
         <Route path="/courses" element={ user ? <Courses /> :<Navigate to="/login"/>}  />
         <Route path="/courses/:id" element={ user ? <CourseIndividual /> :<Navigate to="/login"/>} />
-        <Route path="/courses/video" element={ user ? <Streaming /> :<Navigate to="/login"/>} />
+        <Route path="/course/video" element={ user ? <Streaming /> :<Navigate to="/login"/>} />
         <Route path="/profile" element={ user ? <Profile /> :<Navigate to="/login"/>}  />
         <Route path="/settings" element={<Settings />} />
         <Route path="/about" element={<AboutUs />} />
