@@ -1,71 +1,154 @@
-import React, { useState } from "react";
-import { Star, StarHalf, AlertTriangle, Users } from "lucide-react";
-import sample from "../sampleStore/sample";
-import { ReportForm } from "../components";
+import React, { useEffect, useState } from "react";
+import { Star, StarHalf, AlertTriangle, Users, Loader } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { useUserStore } from "../store/useuserStore";
+import { IndividualCourseSkeleton, ReportForm } from "../components";
+import { useAuthStore } from "../store/useAuthStore";
+import toast from "react-hot-toast";
 
 const CourseIndividual = () => {
   const [loading, setLoading] = useState(false);
-  const isRegistered = true;
-  const course = sample[5];
-  const [showReportForm,setShowReportForm] = useState(false);
+  const [course, setCourse] = useState(null);
+  const [showReportForm, setShowReportForm] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const { getCourse, courseLoading, getReviews, abandonCourse, addReview } =
+    useUserStore();
+  const { courseId } = useParams();
+  const [submittingReview, setSubmittingReview] = useState(false);
+  const [abandoningCourse, setAbandoningCourse] = useState(false);
+  const { user } = useAuthStore();
+  const isRegistered = course?.enrolledStudents?.includes(user._id);
+  const [userRating, setUserRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
 
-  const handleReport = (reason)=>{
+  const handleAddReview = async () => {
+    if (userRating <= 0 || !reviewText) {
+      toast.error("Please provide rating and review");
+      return;
+    }
+    setSubmittingReview(true);
+    const added = await addReview({
+      courseId,
+      rating: userRating,
+      review: reviewText,
+    });
+    if (added)
+      setReviews((prev) => [
+        ...prev,
+        {
+          rating: userRating,
+          review: reviewText,
+          studentId: {
+            name: user.name,
+            profilePic: user.profilePic,
+          },
+          createdAt: new Date().toISOString(),
+        },
+      ]);
+    setSubmittingReview(false);
+    setReviewText("");
+    setUserRating(0);
+  };
+
+  const [showAbandonAlert, setshowAbandonAlert] = useState(false);
+
+  const confirmAbandon = () => {
+    setshowAbandonAlert(false);
+    console.log("Abandoning course");
+  };
+
+ //Enrollment,Report  and abandonCourse  are still to be done
+
+  useEffect(() => {
+    (async () => {
+      const res = await getCourse(courseId);
+      const reviewData = await getReviews(courseId);
+      setReviews(reviewData);
+      setCourse(res);
+    })();
+  }, [courseId, getCourse, getReviews]);
+
+  const handleReport = (reason) => {
     console.log(reason);
     setShowReportForm(false);
-  }
-
-  const handleAction = () => {
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
   };
+
+  if (courseLoading) return <IndividualCourseSkeleton />;
+  if (!course)
+    return (
+      <h1 className="text-center text-error h-screen text-2xl">
+        Course not found
+      </h1>
+    );
 
   return (
     <main className="pt-[69px] bg-base-100 min-h-screen flex flex-col items-center">
+      {showAbandonAlert && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+          <div className="bg-base-200 p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 className="text-2xl font-bold mb-4">Are you sure?</h2>
+            <p className="text-sm mb-4">
+              Do you really want to abandon this course? This will remove all of
+              your porgress and certificate if alloted.
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                className="btn btn-error"
+                onClick={() => setshowAbandonAlert(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn btn-primary mt-2"
+                disabled={abandoningCourse}
+                onClick={confirmAbandon}
+              >
+                {abandoningCourse ? (
+                  <>
+                    <Loader className="size-5 animate-spin" />
+                    Abandoning ...
+                  </>
+                ) : (
+                  "Abandon Course"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <section
-        className="w-full h-72 bg-contain  bg-center relative"
+        className="w-full h-72 bg-contain bg-center relative"
         style={{ backgroundImage: `url(${course?.thumbnail})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-base-100" />
       </section>
 
       <article className="w-full max-w-5xl bg-base-200 shadow-lg rounded-lg p-8 -mt-16 z-10">
-        <header className="flex items-center gap-6 mb-8">
-          <div className="avatar">
-            <div className="w-24 h-24 rounded-full ring-4 ring-primary">
-              <img
-                src={
-                  course?.teacherImage ||
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRW4A7U_-p0YVaW4AXeq0LOqucj0ludkVVUQ&s"
-                }
-                alt="Teacher"
-              />
-            </div>
+        <header className="flex items-center gap-6 mb-6">
+          <div className="avatar w-24 h-24 rounded-full ring-4 ring-primary overflow-hidden">
+            <img
+              src={course?.teacherId.profilePic}
+              alt="Teacher"
+              className="w-full h-full object-cover"
+            />
           </div>
-          <div>
-            <h2 className="text-2xl font-bold">{course?.teacherName}</h2>
-            <p className="text-sm flex items-center  mt-2 ">
-              <Users className="inline h-5 w-5 mr-2" />{" "}
-              {course?.enrolledStudents || 20} Students Enrolled
-            </p>
-          </div>
+          <h2 className="text-2xl font-bold">{course?.teacherId.name}</h2>
         </header>
 
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          {[
+            ["Category", course?.category],
+            ["Language", course?.language],
+            ["Lessons", course?.lectures.length],
+          ].map(([label, value], index) => (
+            <div key={index}>
+              <h3 className="font-medium">{label}:</h3>
+              <p className="text-primary">{value}</p>
+            </div>
+          ))}
           <div>
-            <h3 className="font-medium ">Category:</h3>
-            <p className="text-primary">{course?.category}</p>
-          </div>
-          <div>
-            <h3 className="font-medium ">Language:</h3>
-            <p className="text-primary">{course?.language}</p>
-          </div>
-          <div>
-            <h3 className="font-medium ">Lessons:</h3>
-            <p className="text-primary">{course?.length}</p>
-          </div>
-          <div>
-            <h3 className="font-medium ">Rating:</h3>
-            <div className="flex items-center gap-[2px] text-primary">
+            <h3 className="font-medium">Rating:</h3>
+            <div className="flex items-center gap-1 text-primary">
               {Array.from({ length: Math.floor(course.rating) }, (_, i) => (
                 <Star
                   key={i}
@@ -82,19 +165,106 @@ const CourseIndividual = () => {
         </section>
 
         <section>
-          <h1 className="text-3xl font-bold mb-4">{course?.title}</h1>
-          <p className="text-base leading-7  text-justify">
+          <h1 className="text-3xl font-bold mb-4">
+            {course?.title.toUpperCase()}
+          </h1>
+          <p className="text-sm flex items-center my-2">
+            <Users className="h-5 w-5 mr-2" /> {course?.enrolledStudents.length}{" "}
+            Students Enrolled
+          </p>
+          <p className="text-base leading-7 text-justify">
             {course?.description}
           </p>
         </section>
       </article>
+
+      <section className="w-full max-w-5xl bg-base-200 shadow-lg rounded-lg p-8 mt-8">
+        <h2 className="text-2xl font-bold mb-4">Reviews</h2>
+        {reviews.length > 0 ? (
+          reviews.map((review) => (
+            <div
+              key={review._id}
+              className="flex items-start gap-4 p-4 border-b border-gray-300"
+            >
+              <img
+                src={review.studentId.profilePic}
+                alt="Profile"
+                className="w-12 h-12 rounded-full"
+              />
+              <div>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold ">{review.studentId.name}</h3>
+                  <p className="text-xs">
+                    {new Date(review.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <p className="text-sm my-1">{review.review}</p>
+                <div className="flex items-center gap-1 text-primary">
+                  {Array.from({ length: Math.floor(review.rating) }, (_, i) => (
+                    <Star
+                      key={i}
+                      className="w-4 h-4"
+                      color="yellow"
+                      fill="yellow"
+                    />
+                  ))}
+                  {review.rating % 1 > 0 && (
+                    <StarHalf
+                      className="w-4 h-4"
+                      color="yellow"
+                      fill="yellow"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500">No reviews yet</p>
+        )}
+      </section>
+
+      {isRegistered && (
+        <div className=" my-6 w-full max-w-5xl">
+          <textarea
+            className="w-full mb-2 p-2 border rounded"
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+            placeholder="Write your review..."
+          />
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((num) => (
+              <Star
+                key={num}
+                className="w-6 h-6 cursor-pointer"
+                fill={userRating >= num ? "yellow" : "none"}
+                stroke="yellow"
+                onClick={() => setUserRating(num)}
+              />
+            ))}
+          </div>
+          <button
+            className="btn btn-primary mt-2"
+            disabled={submittingReview}
+            onClick={handleAddReview}
+          >
+            {submittingReview ? (
+              <>
+                <Loader className="size-5 animate-spin" />
+                Submitting ...
+              </>
+            ) : (
+              "Submit Review"
+            )}
+          </button>
+        </div>
+      )}
 
       <footer className="w-full max-w-5xl flex flex-col sm:flex-row justify-center gap-4 mt-8 p-4">
         <button
           className={`btn w-full sm:w-auto ${
             isRegistered ? "btn-success" : "btn-primary"
           }`}
-          onClick={handleAction}
           disabled={loading}
         >
           {loading
@@ -103,14 +273,28 @@ const CourseIndividual = () => {
             ? "Continue Course"
             : "Enroll Now"}
         </button>
-        <button className="btn btn-outline btn-error flex items-center gap-2"
-        onClick={()=>setShowReportForm(true)}
+        {isRegistered && (
+          <button
+            className="btn btn-error"
+            onClick={() => setshowAbandonAlert(true)}
+          >
+            Abandon Course
+          </button>
+        )}
+        <button
+          className="btn btn-outline btn-error flex items-center gap-2"
+          onClick={() => setShowReportForm(true)}
         >
-          <AlertTriangle className="w-5 h-5" />
-          Report
+          <AlertTriangle className="w-5 h-5" /> Report
         </button>
       </footer>
-      {showReportForm && <ReportForm onSubmit={(reason)=>handleReport(reason)} onCancel={()=>setShowReportForm(false)}/>}
+
+      {showReportForm && (
+        <ReportForm
+          onSubmit={handleReport}
+          onCancel={() => setShowReportForm(false)}
+        />
+      )}
     </main>
   );
 };

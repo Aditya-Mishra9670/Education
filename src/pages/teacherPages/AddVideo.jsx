@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { TextCursor, Image, Book, Plus, Video, Loader } from "lucide-react";
 import { useUserStore } from "../../store/useuserStore";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const AddVideo = () => {
+  const {courseId} = useParams()
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     thumbnail: null,
     file: null,
-    courseId: "67bd8e38c1e685823f150d05",
+    courseId: courseId,
   });
 
   const { addVideo, addingVideo } = useUserStore();

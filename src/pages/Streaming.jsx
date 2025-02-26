@@ -14,9 +14,13 @@ const Streaming = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const res = getVideo(id);
-    setVideoData(res);
-    setSimilarVideos(getSimilarVideos(res?.category));
+    const fetchData = async () => {
+      const res = await getVideo(id);
+      setVideoData(res);
+      const similar = await getSimilarVideos(id);
+      setSimilarVideos(similar);
+    };
+    fetchData();
   }, [id, getVideo, getSimilarVideos]);
 
   const plyrOptions = useMemo(
@@ -47,7 +51,7 @@ const Streaming = () => {
   const videoSources = useMemo(
     () => ({
       type: "video",
-      sources: [{ src: videoData.videoUrl, type: "video/mp4" }],
+      sources: [{ src: videoData.url, type: "video/mp4" }],
       poster: videoData.thumbnail,
     }),
     [videoData]
@@ -76,12 +80,19 @@ const Streaming = () => {
       </section>
 
       <section className="w-full max-w-4xl p-4">
+        <h3 className="text-xl font-medium my-2 line-clamp-2">
+          {videoData.title}
+        </h3>
         <button
-          className="flex items-center gap-2 text-primary font-medium"
+          className="flex items-center gap-2  font-medium"
           onClick={() => setShowDescription(!showDescription)}
         >
           {showDescription ? "Hide Description" : "Show Description"}
-          {showDescription ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          {showDescription ? (
+            <ChevronUp size={20} />
+          ) : (
+            <ChevronDown size={20} />
+          )}
         </button>
         {showDescription && (
           <p className="text-base text-justify mt-2 text-base-content">
@@ -90,26 +101,32 @@ const Streaming = () => {
         )}
       </section>
 
-      <section className="w-full max-w-4xl p-4">
-        <h2 className="text-xl font-bold mb-4">Continue Watching</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {similarVideos.map((video) => (
-            <Link to={`/course/video/${video.id}`} key={video.id} className="block">
-              <div className="bg-base-200 rounded-lg p-2 shadow-md hover:shadow-lg transition-shadow">
-                <img
-                  src={video.thumbnail}
-                  alt={video.title}
-                  className="w-full h-40 object-cover rounded-lg"
-                  loading="lazy"
-                />
-                <h3 className="text-sm font-medium mt-2 text-center line-clamp-2">
-                  {video.title}
-                </h3>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {similarVideos.length > 0 && (
+        <section className="w-full max-w-4xl p-4">
+          <h2 className="text-xl font-bold mb-4">Continue Watching</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {similarVideos?.map((video) => (
+              <Link
+                to={`/course/video/${video.id}`}
+                key={video.id}
+                className="block"
+              >
+                <div className="bg-base-200 rounded-lg p-2 shadow-md hover:shadow-lg transition-shadow">
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-40 object-cover rounded-lg"
+                    loading="lazy"
+                  />
+                  <h3 className="text-sm font-medium mt-2 text-center line-clamp-2">
+                    {video.title}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 };

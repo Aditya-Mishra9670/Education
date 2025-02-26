@@ -34,7 +34,6 @@ function App() {
     getUser();
   },[getUser])
 
-  console.log(user?.role)
   if (checkingAuth && !user)
     return (
       <div className="flex items-center justify-center h-screen">
@@ -51,8 +50,8 @@ function App() {
         <Route path="/signup" element={ !user ? <Signup /> :<Navigate to="/"/>}  />
         <Route path="/forgot-password" element={ !user ? <ForgotPass /> :<Navigate to="/"/>}  />
         <Route path="/courses" element={ user ? <Courses /> :<Navigate to="/login"/>}  />
-        <Route path="/courses/:id" element={ user ? <CourseIndividual /> :<Navigate to="/login"/>} />
-        <Route path="/course/video" element={ user ? <Streaming /> :<Navigate to="/login"/>} />
+        <Route path="/courses/:courseId" element={ user ? <CourseIndividual /> :<Navigate to="/login"/>} />
+        <Route path="/course/video/:id" element={ user ? <Streaming /> :<Navigate to="/login"/>} />
         <Route path="/profile" element={ user ? <Profile /> :<Navigate to="/login"/>}  />
         <Route path="/settings" element={<Settings />} />
         <Route path="/about" element={<AboutUs />} />
@@ -62,7 +61,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/my-courses" element={ user ? <MyCourses /> :<Navigate to="/login"/>}  />
         <Route path="/create-course" element={ user?.role === "teacher" ? <CreateCourse /> :<Navigate to="/login"/>}  />
-        <Route path="/course/addVideo" element={ user?.role === "teacher" ? <AddVideo /> :<Navigate to="/login"/>}  />
+        <Route path="/:courseId/addVideo" element={ user?.role === "teacher" ? <AddVideo /> :<Navigate to="/login"/>}  />
 
 
         <Route path="*" element={<Error />} />

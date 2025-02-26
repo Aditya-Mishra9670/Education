@@ -11,5 +11,7 @@ import ReportForm from "./ReportForm";
 import ChangePassword from "./ChangePassword";
 import ThemeChanger from "./ThemeChanger";
 import TrackReports from "./TrackReports";
+import IndividualCourseSkeleton from "./Skeletons/IndividualCourseSkeleton";
+import MyCourseSkeleton from "./Skeletons/MyCourseSkeleton"
 
-export {Header,Footer,MenuC,SearchBar,Hero,Compare,Steps,Cta,CourseSkeleton,ReportForm,ThemeChanger,ChangePassword,TrackReports};
+export {Header,Footer,MenuC,SearchBar,MyCourseSkeleton,Hero,Compare,Steps,Cta,CourseSkeleton,ReportForm,ThemeChanger,ChangePassword,TrackReports,IndividualCourseSkeleton};

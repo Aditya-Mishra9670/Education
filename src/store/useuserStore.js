@@ -6,17 +6,16 @@ export const useUserStore = create((set) => ({
   userCourses: [],
   myCoursesLoading: false,
   allCourses: [],
+  courseLoading: false,
   allCoursesLoading: false,
-  creatingCourse:false,
-  addingVideo:false,
-  loadingVideo:false,
-
+  creatingCourse: false,
+  addingVideo: false,
+  loadingVideo: false,
 
   getMyCourses: async () => {
     set({ myCoursesLoading: true });
     try {
       const res = await axiosInstance.get("/user/myCourses");
-      console.log(res?.data?.data);
       set({ userCourses: res.data.data });
     } catch (error) {
       set({ userCourses: [] });
@@ -25,11 +24,32 @@ export const useUserStore = create((set) => ({
     }
   },
 
+  getReviews: async (courseId) => {
+    try {
+      const res = await axiosInstance.get(`/user/getReviews/${courseId}`);
+      return res?.data?.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getCourse: async (id) => {
+    set({ courseLoading: true });
+    try {
+      const res = await axiosInstance.get(`/user/course/${id}`);
+      return res?.data?.data;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      set({ courseLoading: false });
+    }
+  },
+
   getAllCourses: async () => {
     set({ allCoursesLoading: true });
     try {
       const res = await axiosInstance.get("/user/allCourses");
-      console.log(res?.data?.data);
       set({ allCourses: res.data.data });
     } catch (error) {
       set({ allCourses: [] });
@@ -38,39 +58,66 @@ export const useUserStore = create((set) => ({
     }
   },
 
-  createCourse:async(data)=>{
-    set({creatingCourse:true})
+  addReview: async (data) => {
     try {
-      const res = await axiosInstance.post("/teacher/createCourse",data);
+      await axiosInstance.post("/user/add-review", data);
+      toast.success("Review added successfully");
+      return true;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+      return false;
+    }
+  },
+
+  abandonCourse: async (courseId) => {
+    try {
+      await axiosInstance.post(`/user/abandon/${courseId}`);
+      toast.success("Course abandoned successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  },
+
+  createCourse: async (data) => {
+    set({ creatingCourse: true });
+    try {
+      const res = await axiosInstance.post("/teacher/createCourse", data);
       console.log(res?.data?.data);
     } catch (error) {
       console.log(error);
     } finally {
-      set({creatingCourse:false})
+      set({ creatingCourse: false });
     }
   },
 
   addVideo: async (data) => {
     set({ addingVideo: true });
-  
+
     try {
       const formData = new FormData();
       formData.append("file", data.file);
       formData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_PRESET);
-  
-      const videoRes = await fetch(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/video/upload`, {
-        method: "POST",
-        body: formData,
-      });
-  
+
+      const videoRes = await fetch(
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUD_NAME
+        }/video/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
       const videoData = await videoRes.json();
       const fileURL = videoData.secure_url;
       const duration = videoData.duration;
-  
+
       const newData = { ...data, file: fileURL, duration };
-  
+
       const res = await axiosInstance.post("/teacher/uploadVideo", newData);
-  
+
       console.log(res?.data?.data);
       toast.success("Video uploaded successfully");
     } catch (error) {
@@ -81,20 +128,22 @@ export const useUserStore = create((set) => ({
     }
   },
 
-  getVideo:async(id)=>{
-    set({loadingVideo:true})
+  getVideo: async (id) => {
+    set({ loadingVideo: true });
     try {
       const res = await axiosInstance.get(`/user/video/${id}`);
+      return res?.data?.data;
     } catch (error) {
-      
+      console.log(error);
     }
   },
 
-  getSimilarVideos:async(category)=>{
-
-  }
-  
-
-  
-  
+  getSimilarVideos: async (videoId) => {
+    try {
+      const res = await axiosInstance.get(`/user/similarVideos/${videoId}`);
+      return res?.data?.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 }));

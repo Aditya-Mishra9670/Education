@@ -154,7 +154,7 @@ const Courses = () => {
                 <div className="mt-4 flex-grow flex items-end">
                   <button
                     className="btn btn-primary w-full py-2 rounded-lg font-medium"
-                    onClick={() => navigate(course.title)}
+                    onClick={() => navigate(course._id)}
                   >
                     View Course
                   </button>

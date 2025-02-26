@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Star, StarHalf } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useUserStore } from "../store/useuserStore";
+import { MyCourseSkeleton } from "../components";
 
 const CourseList = () => {
   const navigate = useNavigate();
@@ -13,9 +14,7 @@ const CourseList = () => {
 
   if (myCoursesLoading)
     return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
+      <MyCourseSkeleton/>
     );
 
   return (
@@ -116,7 +115,7 @@ const CourseList = () => {
                   <button
                     className="btn btn-primary w-1/2 py-2 font-medium"
                     onClick={() =>
-                      navigate(`/course/${enrollment.courseId._id}`)
+                      navigate(`/courses/${enrollment.courseId._id}`)
                     }
                   >
                     Continue
