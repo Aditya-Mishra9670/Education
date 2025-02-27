@@ -4,10 +4,12 @@ import Plyr from "plyr-react";
 import "plyr-react/plyr.css";
 import { ChevronDown, ChevronUp, Play } from "lucide-react";
 import { useUserStore } from "../store/useuserStore";
+import { useLearnStore } from "../store/useLearnStore";
 
 const Streaming = () => {
   const { id } = useParams();
   const { getVideo, getSimilarVideos } = useUserStore();
+  const {selectedVideo} = useLearnStore();
   const [videoData, setVideoData] = useState({});
   const [similarVideos, setSimilarVideos] = useState([]);
   const [showDescription, setShowDescription] = useState(false);
@@ -15,8 +17,12 @@ const Streaming = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getVideo(id);
-      setVideoData(res);
+      if(!selectedVideo || selectedVideo.id !== id){
+        const video = await getVideo(id);
+        setVideoData(video);
+      }else{
+        setVideoData(selectedVideo);
+      }
       const similar = await getSimilarVideos(id);
       setSimilarVideos(similar);
     };

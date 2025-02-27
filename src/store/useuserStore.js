@@ -3,9 +3,10 @@ import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 
 export const useUserStore = create((set) => ({
-  userCourses: [],
+  userCourses: null,
   myCoursesLoading: false,
   allCourses: [],
+  enrollingInCourse:false,
   courseLoading: false,
   allCoursesLoading: false,
   creatingCourse: false,
@@ -146,4 +147,27 @@ export const useUserStore = create((set) => ({
       console.log(error);
     }
   },
+
+  submitReport:async(data)=>{
+    try {
+      await axiosInstance.post("/user/report-content", data);
+      toast.success("Report submitted successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  },
+
+  enrollInCourse:async(courseId)=>{
+    set({enrollingInCourse:true});
+    try {
+      await axiosInstance.post(`/user/enroll/${courseId}`);
+      toast.success("Enrolled in course successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      set({enrollingInCourse:false});
+    }
+  }
 }));

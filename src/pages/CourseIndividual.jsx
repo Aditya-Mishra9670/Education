@@ -1,25 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { Star, StarHalf, AlertTriangle, Users, Loader } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUserStore } from "../store/useuserStore";
 import { IndividualCourseSkeleton, ReportForm } from "../components";
 import { useAuthStore } from "../store/useAuthStore";
 import toast from "react-hot-toast";
+import { useLearnStore } from "../store/useLearnStore";
 
 const CourseIndividual = () => {
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [course, setCourse] = useState(null);
+
+  const { setSelectedCourse } = useLearnStore();
   const [showReportForm, setShowReportForm] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const { getCourse, courseLoading, getReviews, abandonCourse, addReview } =
-    useUserStore();
+  const {
+    getCourse,
+    courseLoading,
+    getReviews,
+    abandonCourse,
+    addReview,
+    submitReport,
+    enrollInCourse,
+    enrollingInCourse,
+    getMyCourses
+  } = useUserStore();
   const { courseId } = useParams();
   const [submittingReview, setSubmittingReview] = useState(false);
   const [abandoningCourse, setAbandoningCourse] = useState(false);
   const { user } = useAuthStore();
-  const isRegistered = course?.enrolledStudents?.includes(user._id);
+  const [isRegistered, setIsregistered] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+
+  const handleEnrollment = async () => {
+    await enrollInCourse(course?._id);
+    setCourse((prev)=>({
+      ...prev,
+      enrolledStudents: [...prev.enrolledStudents, user._id]
+    }))
+    getMyCourses();
+    setIsregistered(true);
+  };
 
   const handleAddReview = async () => {
     if (userRating <= 0 || !reviewText) {
@@ -52,12 +74,18 @@ const CourseIndividual = () => {
 
   const [showAbandonAlert, setshowAbandonAlert] = useState(false);
 
-  const confirmAbandon = () => {
+  const confirmAbandon = async () => {
+    await abandonCourse(course?._id);
+    setCourse((prev)=>({
+      ...prev,
+      enrolledStudents: prev.enrolledStudents.filter((id) => id !== user._id),  
+    }))
+    setSelectedCourse(null);
     setshowAbandonAlert(false);
-    console.log("Abandoning course");
+    setIsregistered(false);
   };
 
- //Enrollment,Report  and abandonCourse  are still to be done
+  //abandonCourse  are still to be done
 
   useEffect(() => {
     (async () => {
@@ -65,11 +93,18 @@ const CourseIndividual = () => {
       const reviewData = await getReviews(courseId);
       setReviews(reviewData);
       setCourse(res);
+      if (res?.enrolledStudents?.includes(user._id)) setIsregistered(true);
     })();
   }, [courseId, getCourse, getReviews]);
 
   const handleReport = (reason) => {
     console.log(reason);
+    submitReport({
+      entityReported: courseId,
+      type: "Course",
+      reasonToReport: reason.reason,
+      details: reason.details,
+    });
     setShowReportForm(false);
   };
 
@@ -84,12 +119,12 @@ const CourseIndividual = () => {
   return (
     <main className="pt-[69px] bg-base-100 min-h-screen flex flex-col items-center">
       {showAbandonAlert && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
           <div className="bg-base-200 p-8 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-2xl font-bold mb-4">Are you sure?</h2>
             <p className="text-sm mb-4">
-              Do you really want to abandon this course? This will remove all of
-              your porgress and certificate if alloted.
+              Do you really want to abandon this course? This will remove all
+              your progress and certificate if allotted.
             </p>
             <div className="flex justify-end gap-4">
               <button
@@ -99,18 +134,14 @@ const CourseIndividual = () => {
                 Cancel
               </button>
               <button
-                className="btn btn-primary mt-2"
+                className="btn btn-primary flex items-center gap-2"
                 disabled={abandoningCourse}
                 onClick={confirmAbandon}
               >
                 {abandoningCourse ? (
-                  <>
-                    <Loader className="size-5 animate-spin" />
-                    Abandoning ...
-                  </>
-                ) : (
-                  "Abandon Course"
-                )}
+                  <Loader className="size-5 animate-spin" />
+                ) : null}
+                {abandoningCourse ? "Abandoning ..." : "Abandon Course"}
               </button>
             </div>
           </div>
@@ -192,13 +223,12 @@ const CourseIndividual = () => {
                 className="w-12 h-12 rounded-full"
               />
               <div>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center max-w-3xl w-full justify-between">
                   <h3 className="font-bold ">{review.studentId.name}</h3>
-                  <p className="text-xs">
+                  <p className="text-xs ml-5">
                     {new Date(review.createdAt).toLocaleDateString()}
                   </p>
                 </div>
-                <p className="text-sm my-1">{review.review}</p>
                 <div className="flex items-center gap-1 text-primary">
                   {Array.from({ length: Math.floor(review.rating) }, (_, i) => (
                     <Star
@@ -216,6 +246,7 @@ const CourseIndividual = () => {
                     />
                   )}
                 </div>
+                <p className="text-sm my-1">{review.review}</p>
               </div>
             </div>
           ))
@@ -260,26 +291,40 @@ const CourseIndividual = () => {
         </div>
       )}
 
-      <footer className="w-full max-w-5xl flex flex-col sm:flex-row justify-center gap-4 mt-8 p-4">
-        <button
-          className={`btn w-full sm:w-auto ${
-            isRegistered ? "btn-success" : "btn-primary"
-          }`}
-          disabled={loading}
-        >
-          {loading
-            ? "Processing..."
-            : isRegistered
-            ? "Continue Course"
-            : "Enroll Now"}
-        </button>
-        {isRegistered && (
+      <footer className="w-full max-w-5xl flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 p-4">
+        {!isRegistered ? (
           <button
-            className="btn btn-error"
-            onClick={() => setshowAbandonAlert(true)}
+            className="btn btn-primary mt-2"
+            disabled={enrollingInCourse}
+            onClick={handleEnrollment}
           >
-            Abandon Course
+            {enrollingInCourse ? (
+              <>
+                <Loader className="size-5 animate-spin" />
+                Enrolling ...
+              </>
+            ) : (
+              "Enroll"
+            )}
           </button>
+        ) : (
+          <>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setSelectedCourse(course);
+                navigate(`/course/resume/${courseId}`);
+              }}
+            >
+              Continue
+            </button>
+            <button
+              className="btn btn-error"
+              onClick={() => setshowAbandonAlert(true)}
+            >
+              Abandon Course
+            </button>
+          </>
         )}
         <button
           className="btn btn-outline btn-error flex items-center gap-2"

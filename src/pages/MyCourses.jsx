@@ -3,19 +3,21 @@ import { Star, StarHalf } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useUserStore } from "../store/useuserStore";
 import { MyCourseSkeleton } from "../components";
+import { useLearnStore } from "../store/useLearnStore";
 
 const CourseList = () => {
   const navigate = useNavigate();
-  const { userCourses, getMyCourses, myCoursesLoading } = useUserStore();
+  const { userCourses,selectedCourse, getMyCourses, myCoursesLoading } = useUserStore();
+  const{setSelectedCourse} = useLearnStore();
+
+  console.log(userCourses);
+  console.log(selectedCourse)
 
   useEffect(() => {
-    getMyCourses();
-  }, []);
+    if (!userCourses) getMyCourses();
+  }, [userCourses]);
 
-  if (myCoursesLoading)
-    return (
-      <MyCourseSkeleton/>
-    );
+  if (myCoursesLoading) return <MyCourseSkeleton />;
 
   return (
     <div className="space-y-6 pt-[69px]">
@@ -114,9 +116,10 @@ const CourseList = () => {
                 {!enrollment.completed && (
                   <button
                     className="btn btn-primary w-1/2 py-2 font-medium"
-                    onClick={() =>
-                      navigate(`/courses/${enrollment.courseId._id}`)
-                    }
+                    onClick={() => {
+                      navigate(`/course/resume/${enrollment.courseId._id}`);
+                      setSelectedCourse(enrollment);
+                    }}
                   >
                     Continue
                   </button>
