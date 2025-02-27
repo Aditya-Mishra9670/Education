@@ -1,21 +1,10 @@
 import React, { useState } from "react";
-import {
-  Book,
-  TextCursor,
-  Globe,
-  BarChart,
-  Folder,
-  List,
-  Image,
-  Plus,
-  Tag,
-  Loader,
-} from "lucide-react";
+import { Book, TextCursor, Globe, BarChart, Folder, List, Image, Plus, Tag, Loader, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useUserStore } from "../../store/useuserStore";
 
 const CreateCourse = () => {
-  const {createCourse,creatingCourse} = useUserStore();
+  const { createCourse, creatingCourse } = useUserStore();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -27,6 +16,18 @@ const CreateCourse = () => {
     tags: [],
   });
 
+  const FormField = ({ label, icon: Icon, children }) => (
+    <div className="form-control">
+      <label className="label">
+        <span className="label-text text-lg font-semibold flex items-center gap-2">
+          <Icon className="w-5 h-5" />
+          {label}
+        </span>
+      </label>
+      {children}
+    </div>
+  );
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -36,44 +37,29 @@ const CreateCourse = () => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
+    reader.onload = () => setFormData({ ...formData, thumbnail: reader.result });
     reader.readAsDataURL(file);
-    reader.onload =  () => {
-      const base64Image = reader.result;
-      setFormData({ ...formData, thumbnail: base64Image });
-    };
   };
 
   const handleTagInput = (e) => {
     if (e.key === "Enter" && e.target.value.trim()) {
       const tag = e.target.value.trim();
-      if (formData.tags.length <= 8 && !formData.tags.includes(tag)) {
-        setFormData({ ...formData, tags: [...formData.tags, tag] });
-        e.target.value = "";
-      }
+      if (formData.tags.length >= 8) return toast.error("Maximum 8 tags allowed");
+      if (formData.tags.includes(tag)) return toast.error("Tag already exists");
+      setFormData({ ...formData, tags: [...formData.tags, tag] });
+      e.target.value = "";
     }
   };
 
   const removeTag = (tagToRemove) => {
-    setFormData({
-      ...formData,
-      tags: formData.tags.filter((tag) => tag !== tagToRemove),
-    });
+    setFormData({ ...formData, tags: formData.tags.filter((tag) => tag !== tagToRemove) });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      !formData.title ||
-      !formData.description ||
-      !formData.language ||
-      !formData.level ||
-      !formData.category ||
-      !formData.syllabus ||
-      !formData.thumbnail ||
-      formData.tags.length === 0
-    ) {
-      toast.error("Please fill all the fields");
-      return;
+    const requiredFields = Object.entries(formData).filter(([key]) => key !== "tags");
+    if (requiredFields.some(([, value]) => !value)) {
+      return toast.error("Please fill all required fields");
     }
     createCourse(formData);
     setFormData({
@@ -89,167 +75,162 @@ const CreateCourse = () => {
   };
 
   return (
-    <div className="container pt-[69px] mx-auto px-4 py-12">
-      <h1 className="text-4xl lg:text-5xl font-extrabold text-base-content mb-8 text-center flex items-center justify-center gap-3">
-        Add New Course
-      </h1>
+    <div className="container mx-auto px-4 pt-20 pb-12">
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-8 flex items-center justify-center gap-3">
+          <Plus className="w-8 h-8" />
+          Create New Course
+        </h1>
 
-      <div className="max-w-3xl mx-auto bg-base-200 p-8 rounded-lg shadow-lg">
-        <div className="space-y-6">
-          <div>
-            <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
-              <TextCursor className="w-5 h-5" />
-              Title
-            </label>
-            <input
-              type="text"
-              name="title"
-              placeholder="Enter course title"
-              className="input input-bordered w-full focus:ring-2 focus:ring-primary"
-              value={formData.title}
-              onChange={handleInputChange}
-            />
-          </div>
+        <div className="card bg-base-100 shadow-xl">
+          <form onSubmit={handleSubmit} className="card-body p-6 md:p-8 space-y-4">
+            <FormField label="Title" icon={TextCursor}>
+              <input
+                type="text"
+                name="title"
+                placeholder="Course Title"
+                className="input input-bordered"
+                value={formData.title}
+                onChange={handleInputChange}
+              />
+            </FormField>
 
-          <div>
-            <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
-              <Book className="w-5 h-5" />
-              Description
-            </label>
-            <textarea
-              name="description"
-              placeholder="Enter course description"
-              className="textarea textarea-bordered w-full focus:ring-2 focus:ring-primary"
-              rows={4}
-              value={formData.description}
-              onChange={handleInputChange}
-            />
-          </div>
+            <FormField label="Description" icon={Book}>
+              <textarea
+                name="description"
+                placeholder="Course Description"
+                className="textarea textarea-bordered h-32"
+                value={formData.description}
+                onChange={handleInputChange}
+              />
+            </FormField>
 
-          <div>
-            <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
-              <Globe className="w-5 h-5" />
-              Language
-            </label>
-            <select
-              name="language"
-              className="select select-bordered w-full focus:ring-2 focus:ring-primary"
-              value={formData.language}
-              onChange={handleInputChange}
-            >
-              <option disabled value="">
-                Select language
-              </option>
-              <option>Hindi</option>
-              <option>English</option>
-              <option>Hinglish</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
-              <BarChart className="w-5 h-5" />
-              Level
-            </label>
-            <select
-              name="level"
-              className="select select-bordered w-full focus:ring-2 focus:ring-primary"
-              value={formData.level}
-              onChange={handleInputChange}
-            >
-              <option disabled value="">
-                Select level
-              </option>
-              <option>Beginner</option>
-              <option>Intermediate</option>
-              <option>Advanced</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
-              <Folder className="w-5 h-5" />
-              Category
-            </label>
-            <input
-              type="text"
-              name="category"
-              placeholder="Enter course category"
-              className="input input-bordered w-full focus:ring-2 focus:ring-primary"
-              value={formData.category}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div>
-            <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
-              <List className="w-5 h-5" />
-              Syllabus
-            </label>
-            <textarea
-              name="syllabus"
-              placeholder="Enter course syllabus"
-              className="textarea textarea-bordered w-full focus:ring-2 focus:ring-primary"
-              rows={6}
-              value={formData.syllabus}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div>
-            <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
-              <Image className="w-5 h-5" />
-              Thumbnail
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              className="file-input file-input-bordered w-full focus:ring-2 focus:ring-primary"
-              onChange={handleFileChange}
-            />
-          </div>
-
-          <div>
-            <label className="text-lg font-semibold text-base-content mb-2 flex items-center gap-2">
-              <Tag className="w-5 h-5" />
-              Tags
-            </label>
-            <input
-              type="text"
-              placeholder="Add tags (press Enter)"
-              className="input input-bordered w-full focus:ring-2 focus:ring-primary"
-              onKeyDown={handleTagInput}
-            />
-            <div className="flex flex-wrap gap-2 mt-2">
-              {formData.tags.map((tag, index) => (
-                <div
-                  key={index}
-                  className="badge badge-primary badge-lg flex items-center gap-2"
+            <div className="grid md:grid-cols-2 gap-4">
+              <FormField label="Language" icon={Globe}>
+                <select
+                  name="language"
+                  className="select select-bordered"
+                  value={formData.language}
+                  onChange={handleInputChange}
                 >
-                  {tag}
-                  <button
-                    type="button"
-                    onClick={() => removeTag(tag)}
-                    className="btn btn-xs btn-circle btn-ghost"
-                  >
-                    ✕
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
+                  <option disabled value="">Select Language</option>
+                  <option>Hindi</option>
+                  <option>English</option>
+                  <option>Hinglish</option>
+                </select>
+              </FormField>
 
-          <div className="text-center">
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="btn btn-primary px-8 py-3 text-lg hover:btn-outline flex items-center gap-2 mx-auto"
-            >
-              {!creatingCourse && <Plus className="w-5 h-5" />}
-              {creatingCourse && <Loader className=" text-primary-content loading-spinner"/>}
-              {creatingCourse ?"Creating" : "Create Course"}
-            </button>
-          </div>
+              <FormField label="Level" icon={BarChart}>
+                <select
+                  name="level"
+                  className="select select-bordered"
+                  value={formData.level}
+                  onChange={handleInputChange}
+                >
+                  <option disabled value="">Select Level</option>
+                  <option>Beginner</option>
+                  <option>Intermediate</option>
+                  <option>Advanced</option>
+                </select>
+              </FormField>
+            </div>
+
+            <FormField label="Category" icon={Folder}>
+              <input
+                type="text"
+                name="category"
+                placeholder="Course Category"
+                className="input input-bordered"
+                value={formData.category}
+                onChange={handleInputChange}
+              />
+            </FormField>
+
+            <FormField label="Syllabus" icon={List}>
+              <textarea
+                name="syllabus"
+                placeholder="Course Syllabus"
+                className="textarea textarea-bordered h-48"
+                value={formData.syllabus}
+                onChange={handleInputChange}
+              />
+            </FormField>
+
+            <FormField label="Thumbnail" icon={Image}>
+              <div className="flex flex-col gap-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="file-input file-input-bordered w-full"
+                  onChange={handleFileChange}
+                />
+                {formData.thumbnail && (
+                  <div className="relative w-48 h-32 rounded-lg overflow-hidden border">
+                    <img
+                      src={formData.thumbnail}
+                      alt="Thumbnail preview"
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, thumbnail: null })}
+                      className="btn btn-circle btn-xs absolute top-1 right-1"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </FormField>
+
+            <FormField label="Tags" icon={Tag}>
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  placeholder="Add tags (press Enter)"
+                  className="input input-bordered"
+                  onKeyDown={handleTagInput}
+                />
+                <div className="flex flex-wrap gap-2">
+                  {formData.tags.map((tag) => (
+                    <div key={tag} className="badge badge-lg badge-primary gap-2">
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => removeTag(tag)}
+                        className="hover:text-error"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <span className="text-sm text-neutral-content">
+                  {8 - formData.tags.length} tags remaining
+                </span>
+              </div>
+            </FormField>
+
+            <div className="card-actions justify-center mt-6">
+              <button
+                type="submit"
+                className="btn btn-primary w-full md:w-64"
+                disabled={creatingCourse}
+              >
+                {creatingCourse ? (
+                  <>
+                    <Loader className="w-5 h-5 animate-spin" />
+                    Creating Course...
+                  </>
+                ) : (
+                  <>
+                    <Plus className="w-5 h-5" />
+                    Create Course
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

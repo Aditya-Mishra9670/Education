@@ -1,10 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Compare, Cta, Hero, Steps } from "../components";
 
 const Home = () => {
-  //backend integration will evaluate authUser
-  const userAuth = false;
   return (
     <div className="bg-base-200 text-base-content pt-[67px]">
       <header className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

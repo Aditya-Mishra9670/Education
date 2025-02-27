@@ -10,7 +10,7 @@ const Profile = () => {
   const [updateData, setUpdateData] = useState({
     profilePic: updatedUser.profilePic,
     name: updatedUser.name,
-    interests: updatedUser.interests || [], 
+    interests: updatedUser.interests || [],
   });
 
   const handleImageUpload = async (e) => {
@@ -55,7 +55,7 @@ const Profile = () => {
     setUpdateData({
       profilePic: updatedUser.profilePic,
       name: updatedUser.name,
-      interests: updatedUser.interest,
+      interests: updatedUser.interests,
     });
     setShowOptions(false);
   };
@@ -63,34 +63,35 @@ const Profile = () => {
   const hasChanges =
     updateData.profilePic !== updatedUser.profilePic ||
     updateData.name !== updatedUser.name ||
-    JSON.stringify(updateData.interests) !== JSON.stringify(updatedUser.interest);
+    JSON.stringify(updateData.interests) !== JSON.stringify(updatedUser.interests);
 
   return (
-    <div className="pt-20 min-h-screen bg-base-100">
-      <div className="max-w-2xl mx-auto p-6">
-        <div className="bg-base-200 rounded-xl shadow-md p-6 space-y-8">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold">Profile</h1>
-            <p className="mt-2 text-sm text-base-content/70">
-              Manage your profile information
-            </p>
-          </div>
+    <div className="min-h-screen bg-base-100 pt-20">
+      <div className="mx-auto max-w-2xl p-4">
+        <div className="bg-base-200 rounded-box shadow-lg p-6 space-y-6">
+          <header className="text-center space-y-2">
+            <h1 className="text-3xl font-bold text-primary">Profile Settings</h1>
+            <p className="text-sm opacity-75">Manage your personal information and preferences</p>
+          </header>
+
           <div className="flex flex-col items-center gap-4">
-            <div className="relative">
-              <img
-                src={updateData.profilePic}
-                alt="Profile"
-                loading="lazy"
-                className="w-32 h-32 rounded-full ring-4 ring-white object-cover shadow-md"
-              />
+            <div className="avatar relative">
+              <div className="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img
+                  src={updateData.profilePic}
+                  alt="Profile"
+                  className="object-cover"
+                  loading="lazy"
+                />
+              </div>
               {showOptions && (
                 <label
                   htmlFor="avatar-upload"
-                  className={`absolute -bottom-1 -right-1 bg-neutral-focus bg-white hover:scale-105 p-2 rounded-full cursor-pointer transition-all ${
+                  className={`absolute bottom-0 right-0 btn btn-circle btn-sm btn-primary ${
                     isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
                   }`}
                 >
-                  <Camera className="w-5 h-5 text-black rounded-full" />
+                  <Camera className="w-4 h-4" />
                   <input
                     type="file"
                     id="avatar-upload"
@@ -103,93 +104,103 @@ const Profile = () => {
               )}
             </div>
             {showOptions && (
-              <p className="text-sm text-base-content/70">
-                {isUpdatingProfile ? "Uploading..." : "Click to change photo"}
+              <p className="text-sm opacity-75">
+                {isUpdatingProfile ? "Updating..." : "Max 2MB • PNG/JPG"}
               </p>
             )}
           </div>
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <div className="text-sm flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Full Name
-              </div>
+
+          <div className="space-y-4">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Full Name
+                </span>
+              </label>
               <input
-                className="input input-bordered w-full"
+                className="input input-bordered"
                 readOnly={!showOptions}
                 value={updateData.name}
-                placeholder="Enter your name"
-                onChange={(e) =>
-                  setUpdateData({ ...updateData, name: e.target.value })
-                }
+                placeholder="Your name"
+                onChange={(e) => setUpdateData({ ...updateData, name: e.target.value })}
               />
             </div>
-            <div className="space-y-2">
-              <div className="text-sm flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                Email Address
-              </div>
-              <p className="input input-bordered w-full bg-base-300 pt-3 cursor-not-allowed">
-                {updatedUser?.email}
-              </p>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  Email Address
+                </span>
+              </label>
+              <input
+                type="email"
+                className="input input-bordered bg-base-300"
+                value={updatedUser?.email}
+                disabled
+              />
             </div>
-            <div className="space-y-2">
-              <div className="text-sm flex items-center gap-2">
-                <Heart className="w-4 h-4" />
-                Interests
-              </div>
-              <div className="flex flex-wrap items-center gap-2 bg-base-300 p-2 rounded-lg border">
-                {updateData.interests.map((item, index) => (
-                  <span
-                    className="badge badge-primary/10 font-semibold text-primary flex items-center gap-1"
-                    key={index}
-                  >
-                    {item}
-                    {showOptions && (
-                      <X
-                        className="w-4 h-4 cursor-pointer hover:text-error"
-                        onClick={() => removeInterest(index)}
-                      />
-                    )}
-                  </span>
-                ))}
-                {showOptions && (
-                  <input
-                    className="input input-sm input-ghost w-24"
-                    placeholder="Add"
-                    maxLength={8}
-                    onKeyDown={addInterest}
-                  />
-                )}
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text flex items-center gap-2">
+                  <Heart className="w-4 h-4" />
+                  Interests
+                </span>
+              </label>
+              <div className="border-base-300 bg-base-100 rounded-box border p-3">
+                <div className="flex flex-wrap gap-2">
+                  {updateData.interests.map((item, index) => (
+                    <div key={index} className="badge badge-lg badge-accent gap-1">
+                      <span>{item}</span>
+                      {showOptions && (
+                        <X
+                          className="w-4 h-4 cursor-pointer"
+                          onClick={() => removeInterest(index)}
+                        />
+                      )}
+                    </div>
+                  ))}
+                  {showOptions && (
+                    <input
+                      className="input input-sm input-ghost w-24 focus:outline-none"
+                      placeholder="Add interest..."
+                      maxLength={8}
+                      onKeyDown={addInterest}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="mt-6 flex justify-end gap-4">
-          {showOptions ? (
-            <>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-end">
+            {showOptions ? (
+              <>
+                <button
+                  onClick={resetChanges}
+                  className="btn btn-ghost order-1 sm:order-none"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={saveData}
+                  className={`btn btn-primary ${isUpdatingProfile ? "loading" : ""}`}
+                  disabled={!hasChanges || isUpdatingProfile}
+                >
+                  Save Changes
+                </button>
+              </>
+            ) : (
               <button
-                className="btn btn-secondary"
-                onClick={resetChanges}
+                onClick={() => setShowOptions(true)}
+                className="btn btn-primary w-full sm:w-auto"
               >
-                Cancel
+                Edit Profile
               </button>
-              <button
-                className={`btn btn-primary ${isUpdatingProfile ? "loading" : ""}`}
-                onClick={saveData}
-                disabled={!hasChanges || isUpdatingProfile}
-              >
-                Save
-              </button>
-            </>
-          ) : (
-            <button
-              className="btn btn-primary w-full"
-              onClick={() => setShowOptions(true)}
-            >
-              Update Profile
-            </button>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
