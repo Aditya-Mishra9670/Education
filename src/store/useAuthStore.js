@@ -7,6 +7,7 @@ export const useAuthStore = create((set) => ({
   checkingAuth: true,
   isLoggingIn: false,
   isLoggingOut: false,
+  
 
   getUser: async () => {
     set({ checkingAuth: true });
@@ -21,6 +22,15 @@ export const useAuthStore = create((set) => ({
     }
   },
 
+
+  getAllData:async()=>{
+    try {
+      const res = await axiosInstance.get("/about");
+      return res?.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
   login: async (data) => {
     set({ isLoggingIn: true });
     try {

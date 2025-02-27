@@ -1,7 +1,18 @@
-import React from "react";
-import { Linkedin, Twitter, GithubIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
 
 const AboutUs = () => {
+  const navigate = useNavigate();
+  const { user, getAllData } = useAuthStore();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    getAllData().then((res) => {
+      setData(res);
+    });
+  }, []);
+
   return (
     <div className="w-full">
       <section
@@ -21,10 +32,18 @@ const AboutUs = () => {
                 structured learning journey today.
               </p>
               <div className="flex flex-wrap gap-4">
-                <button className="btn btn-primary px-6 md:px-8 py-3">
+                <button
+                  className="btn btn-primary px-6 md:px-8 py-3"
+                  onClick={() =>
+                    user ? navigate("/my-courses") : navigate("/login")
+                  }
+                >
                   Start Learning
                 </button>
-                <button className="btn btn-outline btn-primary px-6 md:px-8 py-3">
+                <button
+                  className="btn btn-outline btn-primary px-6 md:px-8 py-3"
+                  onClick={() => navigate("/courses")}
+                >
                   Explore Courses
                 </button>
               </div>
@@ -80,7 +99,9 @@ const AboutUs = () => {
                     <span className="text-xl font-semibold">
                       Active Learners
                     </span>
-                    <span className="text-2xl text-primary">10,000+</span>
+                    <span className="text-2xl text-primary">
+                      {data?.allUsers}+
+                    </span>
                   </div>
                   <progress
                     className="progress progress-primary w-full"
@@ -92,13 +113,17 @@ const AboutUs = () => {
                       <div className="text-sm text-base-content/60">
                         Courses
                       </div>
-                      <div className="text-xl font-bold">100+</div>
+                      <div className="text-xl font-bold">
+                        {data?.allCourses}+
+                      </div>
                     </div>
                     <div className="card bg-base-200 p-4">
                       <div className="text-sm text-base-content/60">
                         Certifications
                       </div>
-                      <div className="text-xl font-bold">5000+</div>
+                      <div className="text-xl font-bold">
+                        {data?.certificates}+
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -193,9 +218,6 @@ const AboutUs = () => {
                 structured pathway to knowledge acquisition and skill
                 development.
               </p>
-              <button className="btn btn-primary px-8 py-3 animate-pulse">
-                Join Our Mission
-              </button>
             </div>
           </div>
         </div>
@@ -225,7 +247,7 @@ const AboutUs = () => {
               </div>
               <header id="founder-aditya" className="text-center">
                 <h3 className="text-2xl font-bold mb-2">Aditya Mishra</h3>
-                <p className=" font-semibold mb-4">Co-Founder</p>
+                <p className=" font-semibold mb-4">Founder</p>
               </header>
               <p className="-content mb-6 text-center">
                 Passionate about making quality education accessible to everyone
@@ -233,7 +255,8 @@ const AboutUs = () => {
               </p>
               <footer className="flex justify-center space-x-4">
                 <a
-                  href="#"
+                  href="https://linkedin.com/in/aditya-mishra-546914288/"
+                  target="_blank"
                   className=" hover:text-secondary transition-colors"
                   aria-label="LinkedIn profile of Aditya Mishra"
                 >
@@ -247,9 +270,10 @@ const AboutUs = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
-                  className=" hover:text-secondary transition-colors"
-                  aria-label="Twitter profile of Aditya Mishra"
+                  href="https://github.com/Aditya-Mishra9670/"
+                  target="_blank"
+                  className="hover:text-secondary transition-colors"
+                  aria-label="GitHub profile of Dheeraj Verma"
                 >
                   <svg
                     className="w-6 h-6"
@@ -257,7 +281,7 @@ const AboutUs = () => {
                     viewBox="0 0 24 24"
                     aria-hidden="true"
                   >
-                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                    <path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.21.68-.47v-1.66c-2.78.6-3.37-1.34-3.37-1.34a2.64 2.64 0 00-1.1-1.45c-.9-.61.07-.6.07-.6a2.08 2.08 0 011.52 1 2.1 2.1 0 002.88.82 2.08 2.08 0 01.62-1.32c-2.22-.25-4.56-1.11-4.56-4.95a3.87 3.87 0 011-2.67 3.6 3.6 0 01.1-2.64s.84-.27 2.75 1a9.35 9.35 0 015 0c1.91-1.32 2.75-1 2.75-1a3.6 3.6 0 01.1 2.64 3.87 3.87 0 011 2.67c0 3.85-2.35 4.7-4.58 4.95a2.34 2.34 0 01.67 1.81v2.68c0 .26.18.56.68.47A10 10 0 0012 2z" />
                   </svg>
                 </a>
               </footer>
@@ -273,7 +297,7 @@ const AboutUs = () => {
               </div>
               <header id="founder-dheeraj" className="text-center">
                 <h3 className="text-2xl font-bold mb-2">Dheeraj Verma</h3>
-                <p className="font-semibold mb-4">Co-Founder</p>
+                <p className="font-semibold mb-4">Founder</p>
               </header>
               <p className="-content mb-6 text-center">
                 Dedicated to creating innovative educational solutions that
@@ -281,7 +305,8 @@ const AboutUs = () => {
               </p>
               <footer className="flex justify-center space-x-4">
                 <a
-                  href="#"
+                  href="https://linkedin.com/in/vermadheeraj945/"
+                  target="_blank"
                   className=" hover:text-secondary transition-colors"
                   aria-label="LinkedIn profile of Dheeraj Verma"
                 >
@@ -295,9 +320,10 @@ const AboutUs = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
-                  className=" hover:text-secondary transition-colors"
-                  aria-label="Twitter profile of Dheeraj Verma"
+                  href="https://github.com/DheerajVerma945"
+                  target="_blank"
+                  className="hover:text-secondary transition-colors"
+                  aria-label="GitHub profile of Dheeraj Verma"
                 >
                   <svg
                     className="w-6 h-6"
@@ -305,7 +331,7 @@ const AboutUs = () => {
                     viewBox="0 0 24 24"
                     aria-hidden="true"
                   >
-                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                    <path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.21.68-.47v-1.66c-2.78.6-3.37-1.34-3.37-1.34a2.64 2.64 0 00-1.1-1.45c-.9-.61.07-.6.07-.6a2.08 2.08 0 011.52 1 2.1 2.1 0 002.88.82 2.08 2.08 0 01.62-1.32c-2.22-.25-4.56-1.11-4.56-4.95a3.87 3.87 0 011-2.67 3.6 3.6 0 01.1-2.64s.84-.27 2.75 1a9.35 9.35 0 015 0c1.91-1.32 2.75-1 2.75-1a3.6 3.6 0 01.1 2.64 3.87 3.87 0 011 2.67c0 3.85-2.35 4.7-4.58 4.95a2.34 2.34 0 01.67 1.81v2.68c0 .26.18.56.68.47A10 10 0 0012 2z" />
                   </svg>
                 </a>
               </footer>
@@ -466,11 +492,6 @@ const AboutUs = () => {
               </p>
             </div>
           </div>
-          <div className="mt-16 text-center">
-            <button className="btn btn-primary px-8 py-3 rounded-full">
-              Explore All Features
-            </button>
-          </div>
         </div>
       </section>
 
@@ -499,7 +520,7 @@ const AboutUs = () => {
                   />
                 </svg>
               </div>
-              <div className="text-4xl font-bold mb-2">0</div>
+              <div className="text-4xl font-bold mb-2">{data?.allUsers}+</div>
               <p className="text-sm">Active Students</p>
             </div>
             <div
@@ -521,7 +542,7 @@ const AboutUs = () => {
                   />
                 </svg>
               </div>
-              <div className="text-4xl font-bold mb-2">0</div>
+              <div className="text-4xl font-bold mb-2">{data?.allCourses}+</div>
               <p className="text-sm">Total Courses</p>
             </div>
             <div
@@ -543,8 +564,10 @@ const AboutUs = () => {
                   />
                 </svg>
               </div>
-              <div className="text-4xl font-bold mb-2">0</div>
-              <p className="text-sm">Learning Hours</p>
+              <div className="text-4xl font-bold mb-2">
+                {data?.allEnrollments}+
+              </div>
+              <p className="text-sm">Enrollments</p>
             </div>
             <div
               className="text-center p-6 bg-base-200 rounded-lg transform hover:-translate-y-2 transition duration-300"
@@ -565,7 +588,9 @@ const AboutUs = () => {
                   />
                 </svg>
               </div>
-              <div className="text-4xl font-bold mb-2">0</div>
+              <div className="text-4xl font-bold mb-2">
+                {data?.certificates}+
+              </div>
               <p className="text-sm">Certificates Issued</p>
             </div>
           </div>

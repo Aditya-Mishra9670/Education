@@ -7,11 +7,8 @@ import { useLearnStore } from "../store/useLearnStore";
 
 const CourseList = () => {
   const navigate = useNavigate();
-  const { userCourses,selectedCourse, getMyCourses, myCoursesLoading } = useUserStore();
+  const { userCourses, getMyCourses, myCoursesLoading } = useUserStore();
   const{setSelectedCourse} = useLearnStore();
-
-  console.log(userCourses);
-  console.log(selectedCourse)
 
   useEffect(() => {
     if (!userCourses) getMyCourses();
