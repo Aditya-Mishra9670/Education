@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { Camera, User, Mail, Heart, X } from "lucide-react";
+import { Camera, User, Mail, Heart, X, Loader } from "lucide-react";
+import { useUserStore } from "../store/useuserStore";
 
 const Profile = () => {
   const user = useAuthStore((state) => state.user);
@@ -12,6 +13,8 @@ const Profile = () => {
     name: updatedUser.name,
     interests: updatedUser.interests || [],
   });
+
+  const {updateProfile} = useUserStore()
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -44,11 +47,11 @@ const Profile = () => {
 
   const saveData = async () => {
     setIsUpdatingProfile(true);
-    setTimeout(() => {
-      setIsUpdatingProfile(false);
-      setUpdatedUser({ ...updatedUser, ...updateData });
-      setShowOptions(false);
-    }, 2000);
+    console.log(updateData);
+    await updateProfile(updateData);
+    setIsUpdatingProfile(false);
+    setUpdatedUser({ ...updatedUser, ...updateData });
+    setShowOptions(false);
   };
 
   const resetChanges = () => {
@@ -63,15 +66,20 @@ const Profile = () => {
   const hasChanges =
     updateData.profilePic !== updatedUser.profilePic ||
     updateData.name !== updatedUser.name ||
-    JSON.stringify(updateData.interests) !== JSON.stringify(updatedUser.interests);
+    JSON.stringify(updateData.interests) !==
+      JSON.stringify(updatedUser.interests);
 
   return (
     <div className="min-h-screen bg-base-100 pt-20">
       <div className="mx-auto max-w-2xl p-4">
         <div className="bg-base-200 rounded-box shadow-lg p-6 space-y-6">
           <header className="text-center space-y-2">
-            <h1 className="text-3xl font-bold text-primary">Profile Settings</h1>
-            <p className="text-sm opacity-75">Manage your personal information and preferences</p>
+            <h1 className="text-3xl font-bold text-primary">
+              Profile Settings
+            </h1>
+            <p className="text-sm opacity-75">
+              Manage your personal information and preferences
+            </p>
           </header>
 
           <div className="flex flex-col items-center gap-4">
@@ -123,7 +131,9 @@ const Profile = () => {
                 readOnly={!showOptions}
                 value={updateData.name}
                 placeholder="Your name"
-                onChange={(e) => setUpdateData({ ...updateData, name: e.target.value })}
+                onChange={(e) =>
+                  setUpdateData({ ...updateData, name: e.target.value })
+                }
               />
             </div>
 
@@ -152,7 +162,10 @@ const Profile = () => {
               <div className="border-base-300 bg-base-100 rounded-box border p-3">
                 <div className="flex flex-wrap gap-2">
                   {updateData.interests.map((item, index) => (
-                    <div key={index} className="badge badge-lg badge-accent gap-1">
+                    <div
+                      key={index}
+                      className="badge badge-lg badge-accent gap-1"
+                    >
                       <span>{item}</span>
                       {showOptions && (
                         <X
@@ -186,10 +199,17 @@ const Profile = () => {
                 </button>
                 <button
                   onClick={saveData}
-                  className={`btn btn-primary ${isUpdatingProfile ? "loading" : ""}`}
+                  className="btn btn-primary"
                   disabled={!hasChanges || isUpdatingProfile}
                 >
-                  Save Changes
+                  {isUpdatingProfile ? (
+                    <>
+                      <Loader className="size-5 animate-spin" />
+                      Updating...
+                    </>
+                  ) : (
+                    "Save Changes"
+                  )}
                 </button>
               </>
             ) : (

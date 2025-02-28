@@ -1,22 +1,30 @@
-import { Eye, EyeOff, Save, Lock } from "lucide-react";
+import { Eye, EyeOff, Save, Lock, Loader } from "lucide-react";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useUserStore } from "../store/useuserStore";
 
 const ChangePassword = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const { updatePass } = useUserStore();
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [updatingPass, setUpdatingPass] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setUpdatingPass(true);
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match!");
+      toast.error("Passwords do not match!");
+      setUpdatingPass(false);
       return;
     }
-    setSuccess("Password changed successfully!");
-    setError("");
+    await updatePass({ oldPassword, newPassword });
+    setUpdatingPass(false);
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
   };
 
   return (
@@ -33,6 +41,8 @@ const ChangePassword = () => {
           <input
             type="password"
             placeholder="Old Password"
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
             className="input input-bordered input-primary w-full"
           />
         </div>
@@ -46,7 +56,9 @@ const ChangePassword = () => {
           />
           <button
             type="button"
-            aria-label={showNewPassword ? "Hide new password" : "Show new password"}
+            aria-label={
+              showNewPassword ? "Hide new password" : "Show new password"
+            }
             className="absolute inset-y-0 right-3 flex items-center hover:text-primary"
             onClick={() => setShowNewPassword(!showNewPassword)}
           >
@@ -67,7 +79,11 @@ const ChangePassword = () => {
           />
           <button
             type="button"
-            aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+            aria-label={
+              showConfirmPassword
+                ? "Hide confirm password"
+                : "Show confirm password"
+            }
             className="absolute inset-y-0 right-3 flex items-center hover:text-primary"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           >
@@ -78,11 +94,25 @@ const ChangePassword = () => {
             )}
           </button>
         </div>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        {success && <p className="text-green-500 text-sm">{success}</p>}
-        <button type="submit" className="btn btn-primary w-full flex items-center justify-center space-x-2">
-          <Save className="w-5 h-5" />
-          <span>Save Changes</span>
+
+        <button
+          type="submit"
+          disabled={
+            updatingPass || !oldPassword || !newPassword || !confirmPassword
+          }
+          className="btn btn-primary"
+        >
+          {updatingPass ? (
+            <>
+              <Loader className="size-5 animate-spin" />
+              Updating...
+            </>
+          ) : (
+            <>
+              <Save className="w-5 h-5" />
+              <span>Save Changes</span>
+            </>
+          )}
         </button>
       </form>
     </div>

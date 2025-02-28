@@ -20,6 +20,7 @@ import {
   AddVideo,
   Streaming,
   ResumeLearning,
+  ReportView,
 } from "./pages";
 import { useThemeStore } from "./store/useThemeStore";
 import { Toaster } from "react-hot-toast";
@@ -62,6 +63,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/my-courses" element={ user ? <MyCourses /> :<Navigate to="/login"/>}  />
         <Route path="/my-courses" element={ user ? <MyCourses /> :<Navigate to="/login"/>}  />
+        <Route path="/report/:id" element={ user ? <ReportView /> :<Navigate to="/login"/>}  />
+
         <Route path="/course/resume/:courseId" element={ user ? <ResumeLearning /> :<Navigate to="/login"/>}  />
         <Route path="/create-course" element={ user?.role === "teacher" ? <CreateCourse /> :<Navigate to="/login"/>}  />
         <Route path="/:courseId/addVideo" element={ user?.role === "teacher" ? <AddVideo /> :<Navigate to="/login"/>}  />
