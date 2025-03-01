@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Book, TextCursor, Globe, BarChart, Folder, List, Image, Plus, Tag, Loader, X } from "lucide-react";
 import toast from "react-hot-toast";
-import { useUserStore } from "../../store/useuserStore";
+import { useTeacherStore } from "../../store/useTeacherStore";
 
 const CreateCourse = () => {
-  const { createCourse, creatingCourse } = useUserStore();
+  const { createCourse, creatingCourse } = useTeacherStore();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
