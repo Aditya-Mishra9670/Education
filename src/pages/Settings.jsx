@@ -34,7 +34,7 @@ const Settings = () => {
             <span className="hidden md:inline">Change Theme</span>
           </div>
         </button>
-        {user && (
+        {user && user.role === "student" &&  (
           <button
             className={`btn btn-sm sm:btn-md btn-ghost w-full justify-start ${
               activeTab === "reports" ? "btn-active" : ""

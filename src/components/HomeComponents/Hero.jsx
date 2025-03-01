@@ -26,7 +26,13 @@ const Hero = () => {
 
         <div className="mt-8 flex gap-6">
           <Link
-            to={user ? "/courses" : "/login"}
+            to={
+              user
+                ? user.role === "student"
+                  ? "/courses"
+                  : "/create-course"
+                : "/login"
+            }
             className="btn btn-primary hover:btn-outline"
           >
             Get Started

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
 const Cta = () => {
-    const {user} = useAuthStore() ;
+  const { user } = useAuthStore();
   return (
     <section className="text-center mt-16  py-12">
       <h2 className="text-4xl font-extrabold  mb-6">
@@ -15,10 +15,20 @@ const Cta = () => {
         everyone. Let's get started today!
       </p>
       <Link
-        to={user ? "/courses" : "/login"}
+        to={
+          user
+            ? user.role === "student"
+              ? "/courses"
+              : "/create-course"
+            : "/login"
+        }
         className="btn btn-primary btn-outline text-xl text-primary-content py-3 px-8 rounded-full"
       >
-        {user ? "Explore Courses" : "Join Now"}
+        {user
+          ? user.role === "student"
+            ? "Explore Courses"
+            : "Create Course"
+          : "Join"}
       </Link>
     </section>
   );

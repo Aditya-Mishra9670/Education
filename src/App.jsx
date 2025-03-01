@@ -51,21 +51,21 @@ function App() {
         <Route path="/login"  element={ !user ? <Login /> :<Navigate to="/"/>} />
         <Route path="/signup" element={ !user ? <Signup /> :<Navigate to="/"/>}  />
         <Route path="/forgot-password" element={ !user ? <ForgotPass /> :<Navigate to="/"/>}  />
-        <Route path="/courses" element={ user ? <Courses /> :<Navigate to="/login"/>}  />
-        <Route path="/courses/:courseId" element={ user ? <CourseIndividual /> :<Navigate to="/login"/>} />
-        <Route path="/course/video/:id" element={ user ? <Streaming /> :<Navigate to="/login"/>} />
-        <Route path="/profile" element={ user ? <Profile /> :<Navigate to="/login"/>}  />
+        <Route path="/courses" element={ user && user.role === "student" ? <Courses /> :<Navigate to="/login"/>}  />
+        <Route path="/courses/:courseId" element={ user && user.role === "student" ? <CourseIndividual /> :<Navigate to="/login"/>} />
+        <Route path="/course/video/:id" element={ user && user.role === "student" ? <Streaming /> :<Navigate to="/login"/>} />
+        <Route path="/profile" element={ user  ? <Profile /> :<Navigate to="/login"/>}  />
         <Route path="/settings" element={<Settings />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/terms" element={<TermsOfUse />} />
         <Route path="/cookies" element={<Cookies />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/my-courses" element={ user ? <MyCourses /> :<Navigate to="/login"/>}  />
-        <Route path="/my-courses" element={ user ? <MyCourses /> :<Navigate to="/login"/>}  />
-        <Route path="/report/:id" element={ user ? <ReportView /> :<Navigate to="/login"/>}  />
+        <Route path="/my-courses" element={ user && user.role === "student" ? <MyCourses /> :<Navigate to="/login"/>}  />
+        <Route path="/my-courses" element={ user && user.role === "student" ? <MyCourses /> :<Navigate to="/login"/>}  />
+        <Route path="/report/:id" element={ user && user.role === "student" ? <ReportView /> :<Navigate to="/login"/>}  />
 
-        <Route path="/course/resume/:courseId" element={ user ? <ResumeLearning /> :<Navigate to="/login"/>}  />
+        <Route path="/course/resume/:courseId" element={ user && user.role === "student" ? <ResumeLearning /> :<Navigate to="/login"/>}  />
         <Route path="/create-course" element={ user?.role === "teacher" ? <CreateCourse /> :<Navigate to="/login"/>}  />
         <Route path="/:courseId/addVideo" element={ user?.role === "teacher" ? <AddVideo /> :<Navigate to="/login"/>}  />
 
