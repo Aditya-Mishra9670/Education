@@ -21,5 +21,8 @@ import Reports from "./adminPages/Reports";
 import Streaming from "./Streaming";
 import ResumeLearning from "./ResumeLearning";
 import ReportView from "./ReportView";
+import TeacherCourses from "./teacherPages/TeacherCourses";
+import EditCourse from "./teacherPages/EditCourse";
+import CourseDetails from "./teacherPages/CourseDetails";
 
-export {Login,Signup,Home,ReportView,ForgotPass,Error,ResumeLearning,Courses,Reports,AllUsers,AddVideo,CourseIndividual,Profile,Settings,Streaming,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses,CreateCourse,AdminDashboard}; 
+export {Login,Signup,Home,ReportView,EditCourse,CourseDetails,ForgotPass,Error,TeacherCourses,ResumeLearning,Courses,Reports,AllUsers,AddVideo,CourseIndividual,Profile,Settings,Streaming,AboutUs,TermsOfUse,Cookies,Privacy,Contact,MyCourses,CreateCourse,AdminDashboard}; 

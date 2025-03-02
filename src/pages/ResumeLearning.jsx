@@ -90,7 +90,7 @@ const ResumeLearning = () => {
             </figure>
             
             <div className="card-body p-6">
-              <h2 className="card-title text-lg">{lecture.title}</h2>
+              <h2 className="card-title text-lg">{lecture.title.substr(0,20)}...</h2>
               <button
                 onClick={() => handleWatch(lecture)}
                 className="btn btn-primary mt-4"

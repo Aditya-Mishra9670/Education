@@ -21,6 +21,9 @@ import {
   Streaming,
   ResumeLearning,
   ReportView,
+  TeacherCourses,
+  EditCourse,
+  CourseDetails,
 } from "./pages";
 import { useThemeStore } from "./store/useThemeStore";
 import { Toaster } from "react-hot-toast";
@@ -68,6 +71,9 @@ function App() {
         <Route path="/course/resume/:courseId" element={ user && user.role === "student" ? <ResumeLearning /> :<Navigate to="/login"/>}  />
         <Route path="/create-course" element={ user?.role === "teacher" ? <CreateCourse /> :<Navigate to="/login"/>}  />
         <Route path="/:courseId/addVideo" element={ user?.role === "teacher" ? <AddVideo /> :<Navigate to="/login"/>}  />
+        <Route path="/myCourses" element={ user?.role === "teacher" ? <TeacherCourses /> :<Navigate to="/login"/>}  />
+        <Route path="/teacher/course/edit/:courseId" element={ user?.role === "teacher" ? <EditCourse /> :<Navigate to="/login"/>}  />
+        <Route path="/teacher/course/:courseId" element={ user?.role === "teacher" ? <CourseDetails /> :<Navigate to="/login"/>}  />
 
 
         <Route path="*" element={<Error />} />
