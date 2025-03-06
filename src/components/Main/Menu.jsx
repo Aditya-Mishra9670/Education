@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
 const Menu = ({ isOpen, isClose }) => {
-  const { logout, isLoggingOut } = useAuthStore();
+  const { logout, isLoggingOut,user } = useAuthStore();
 
   const handleLogout = () => {
     logout();
@@ -48,7 +48,7 @@ const Menu = ({ isOpen, isClose }) => {
           <ChevronRight className="h-5 w-5" />
         </Link>
         <Link
-          to="/my-courses"
+          to={user?.role === "student" ? "/my-courses":"myCourses"}
           onClick={isClose}
           className="flex items-center justify-between py-3 px-4 bg-base-200 rounded-md hover:bg-primary hover:text-white transition"
         >

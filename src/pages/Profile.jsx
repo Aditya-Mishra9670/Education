@@ -116,13 +116,13 @@ const Profile = () => {
               
               <EmailInput email={updatedUser?.email} />
               
-              <InterestsSection
+             {user?.role ==="student" &&  <InterestsSection
                 updateData={updateData}
                 showOptions={showOptions}
                 addInterest={addInterest}
                 removeInterest={removeInterest}
                 MAX_INTEREST_LENGTH={MAX_INTEREST_LENGTH}
-              />
+              />}
             </div>
           </div>
 

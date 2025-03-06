@@ -1,44 +1,55 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Lock, User, Eye, EyeOff, Globe, Facebook } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  User,
+  Eye,
+  EyeOff,
+  Globe,
+  Facebook,
+  Loader,
+} from "lucide-react";
 import toast from "react-hot-toast";
+import { useAuthStore } from "../store/useAuthStore";
 
-//username, email, password, role
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [username,setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  const [role,setRole] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("student");
+  const [loading, setLoading] = useState(false);
+  const { signUp } = useAuthStore();
 
   const handleSignUp = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
+
+    if (!username || !email || !password || !confirmPassword || !role) {
+      toast.error("All fields are required");
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      const url = "http://localhost:8000/auth/signup";
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-          role : "student"
-        })
-      });
-      const data = await response.json();
-      console.log(data);
-      // toast.success(data?.message);
-      if (response.ok) {
-        console.log("success bro", data);
-        alert("success bro");
-      } else {
-        toast.error(data.message);
-      }
-    } catch (err) {
-      console.error("error occurred in calling handleSignUp", err);
+      await signUp({ username, email, password, role });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,8 +71,7 @@ const Signup = () => {
                 placeholder="Full Name"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
                 value={username}
-                onChange={(e)=>setUsername(e.target.value)}
-
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="mb-5 relative">
@@ -71,7 +81,7 @@ const Signup = () => {
                 placeholder="Email"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-5 relative">
@@ -81,7 +91,7 @@ const Signup = () => {
                 placeholder="Password"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
                 value={password}
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <div
                 className="absolute right-3 top-3 text-base-content cursor-pointer"
@@ -96,6 +106,8 @@ const Signup = () => {
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 className="input input-bordered w-full rounded-lg pl-10 focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <div
                 className="absolute right-3 top-3 text-base-content cursor-pointer"
@@ -103,6 +115,16 @@ const Signup = () => {
               >
                 {showConfirmPassword ? <Eye /> : <EyeOff />}
               </div>
+            </div>
+            <div className="mb-5 relative">
+              <select
+                className="select select-bordered w-full rounded-lg focus:ring-1 focus:ring-primary bg-base-200 text-base-content"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+              </select>
             </div>
             <div className="flex justify-between items-center mb-6">
               <Link to="/login" className="text-primary hover:underline">
@@ -112,27 +134,24 @@ const Signup = () => {
             <button
               type="submit"
               className="btn bg-primary w-full py-3 rounded-lg text-primary-content transition duration-300"
+              disabled={loading}
             >
-              Sign Up
+              {loading ? <Loader className="animate-spin" /> : "Sign Up"}
             </button>
           </form>
           <div className="divider text-base-content my-8">OR</div>
           <div className="flex flex-col gap-4">
-            <button className="btn bg-red-500 text-white border border-primary  w-full py-3 rounded-lg hover:bg-base-300 flex items-center justify-center gap-2">
+            <button className="btn bg-red-500 text-white border border-primary w-full py-3 rounded-lg hover:bg-base-300 flex items-center justify-center gap-2">
               <Globe /> Continue with Google
             </button>
-            <button className="btn bg-blue-500 text-white border border-primary  w-full py-3 rounded-lg hover:bg-base-300 flex items-center justify-center gap-2">
+            <button className="btn bg-blue-500 text-white border border-primary w-full py-3 rounded-lg hover:bg-base-300 flex items-center justify-center gap-2">
               <Facebook /> Continue with Facebook
             </button>
           </div>
         </div>
         <div className="hidden md:flex w-1/2 bg-primary p-8 rounded-l-3xl items-center justify-center">
           <div className="text-center">
-            <img
-              src="https://ci3.googleusercontent.com/meips/ADKq_Nb--IXJ9pLL70f1Xt1aLNKQLSVRomZRY7qxNVR1eC44k_Ea_bqIGbVLVX1zXFAARvk_zd16ONTqTUIAy0kEWorBGO-_b-3AoiPFR5uEGel-VpaYxpaHHb9igPoamj7D5dNkmGpy3gv5lKysAQ=s0-d-e1-ft#https://res.cloudinary.com/dzitsseoz/image/upload/v1736671628/vcgq9rhodhvrs6dcridx.png"
-              alt="Company Logo"
-              className="mb-6"
-            />
+            <img src="./Logo.png" alt="Company Logo" className="mb-6" />
             <h3 className="text-2xl font-semibold text-primary-content">
               Welcome to Study Tube
             </h3>

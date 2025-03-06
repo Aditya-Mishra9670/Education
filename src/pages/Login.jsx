@@ -21,7 +21,7 @@ const Login = () => {
         <div className="hidden md:flex w-1/3 bg-primary p-8 rounded-r-3xl items-center justify-center">
           <div className="text-center">
             <img
-              src="https://ci3.googleusercontent.com/meips/ADKq_Nb--IXJ9pLL70f1Xt1aLNKQLSVRomZRY7qxNVR1eC44k_Ea_bqIGbVLVX1zXFAARvk_zd16ONTqTUIAy0kEWorBGO-_b-3AoiPFR5uEGel-VpaYxpaHHb9igPoamj7D5dNkmGpy3gv5lKysAQ=s0-d-e1-ft#https://res.cloudinary.com/dzitsseoz/image/upload/v1736671628/vcgq9rhodhvrs6dcridx.png"
+              src="./Logo.png"
               alt="Company Logo"
               className="mb-6"
             />
