@@ -55,18 +55,22 @@ const TeacherCourses = () => {
                 <p>Students: {course.enrolledStudents?.length}</p>
                 <p>Lectures: {course.lectures?.length}</p>
               </div>
-              <div className="card-actions mt-4" onClick={()=>setSelectedCourse(course)}>
-                <button
-                  onClick={() => navigate(`/teacher/course/${course._id}`)}
-                  className="btn btn-primary btn-sm flex-1"
-                >
-                  Details
+                <button onClick={() => navigate(`/${course._id}/addVideo`)}
+                  className="btn btn-info btn-sm flex-1">
+                  Add Lecture
                 </button>
+              <div className="card-actions mt-4" onClick={()=>setSelectedCourse(course)}>
                 <button
                   onClick={() => navigate(`/teacher/course/edit/${course._id}`)}
                   className="btn btn-outline btn-sm flex-1"
                 >
                   Edit
+                </button>
+                <button
+                  onClick={() => navigate(`/teacher/course/${course._id}`)}
+                  className="btn btn-primary btn-sm flex-1"
+                >
+                  Details
                 </button>
               </div>
             </div>

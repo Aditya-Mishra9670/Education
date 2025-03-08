@@ -162,7 +162,7 @@ const AddVideo = () => {
                   <img 
                     src={formData.thumbnail} 
                     alt="Thumbnail preview" 
-                    className="w-32 h-32 object-cover rounded-lg border"
+                    className="w-32 h-32 object-contain rounded-lg border"
                   />
                 </div>
               )}

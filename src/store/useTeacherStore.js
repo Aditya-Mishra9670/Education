@@ -10,6 +10,7 @@ export const useTeacherStore = create((set, get) => ({
   loadingMyCourses: false,
   selectedCourse: null,
   editingCourse: false,
+  selectedVideo: null,
 
   getMyCourses: async () => {
     set({ loadingMyCourses: true });
@@ -24,6 +25,19 @@ export const useTeacherStore = create((set, get) => ({
     }
   },
 
+  setSelectedVideo: (data) => {
+    set({ selectedVideo: data });
+  },
+
+  getSpecificVideo: async (id) => {
+    try {
+      const res = await axiosInstance.get(`/teacher/getVideo/${id}`);
+      set({selectedVideo:res?.data?.data})
+      return res?.data?.data;
+    } catch (error) {
+      console.log("Error while getting video", error);
+    }
+  },
   getSpecificCourse: async (id) => {
     try {
       const res = await axiosInstance.get(`/teacher/course/${id}`);
@@ -101,6 +115,41 @@ export const useTeacherStore = create((set, get) => ({
       console.log(error);
     } finally {
       set({ creatingCourse: false });
+    }
+  },
+
+  editVideo: async (data) => {
+    const { selectedCourse, myCourses } = get();
+    try {
+      const res = await axiosInstance.patch(
+        `/teacher/updateVideo/${data.id}`,
+        data
+      );
+      const updatedVideo = res?.data?.data;
+      set({ selectedVideo: updatedVideo });
+
+      if (selectedCourse) {
+        const updatedLectures = selectedCourse.lectures.map((lecture) =>
+          lecture._id === data.id ? updatedVideo : lecture
+        );
+        set({
+          selectedCourse: { ...selectedCourse, lectures: updatedLectures },
+        });
+      }
+
+      if (myCourses) {
+        const updatedCourses = myCourses.map((course) => ({
+          ...course,
+          lectures: course.lectures.map((lecture) =>
+            lecture._id === data.id ? updatedVideo : lecture
+          ),
+        }));
+        set({ myCourses: updatedCourses });
+      }
+      toast.success("Video Edited Successfully");
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.error("Error updating video:", error);
     }
   },
 

@@ -24,6 +24,7 @@ import {
   TeacherCourses,
   EditCourse,
   CourseDetails,
+  EditVideo,
 } from "./pages";
 import { useThemeStore } from "./store/useThemeStore";
 import { Toaster } from "react-hot-toast";
@@ -74,6 +75,8 @@ function App() {
         <Route path="/myCourses" element={ user?.role === "teacher" ? <TeacherCourses /> :<Navigate to="/login"/>}  />
         <Route path="/teacher/course/edit/:courseId" element={ user?.role === "teacher" ? <EditCourse /> :<Navigate to="/login"/>}  />
         <Route path="/teacher/course/:courseId" element={ user?.role === "teacher" ? <CourseDetails /> :<Navigate to="/login"/>}  />
+        <Route path="/editVideo/:videoId" element={ user?.role === "teacher" ? <EditVideo /> :<Navigate to="/login"/>}  />
+
 
 
         <Route path="*" element={<Error />} />

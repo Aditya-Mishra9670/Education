@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Plyr from "plyr-react";
 import "plyr-react/plyr.css";
-import {  Loader, Play, X, Flag } from "lucide-react";
+import { Loader, Play, X, Flag } from "lucide-react";
 import { useUserStore } from "../store/useuserStore";
 import { useLearnStore } from "../store/useLearnStore";
 import { useAuthStore } from "../store/useAuthStore";
@@ -136,11 +136,11 @@ const Streaming = () => {
                   className="peer"
                   defaultChecked={false}
                 />
-                <div className="collapse-title p-0 text-primary font-medium">
+                <div className="collapse-title mt-1  text-primary font-medium">
                   Show Description
                 </div>
-                <div className="collapse-content p-0">
-                  <p className="pt-2">{videoData.description}</p>
+                <div className="collapse-content">
+                  <p className="pt-4">{videoData.description}</p>
                 </div>
               </div>
             </div>
